@@ -1,0 +1,39 @@
+Empresa de venda de computadores e manutenção
+
+Nome da empresa: Mundo Informática
+
+Objetivo da Empresa:
+
+Venda de periféricos de computador e manutenção.
+
+
+Objetivo Do site:
+
+O site da empresa tem como objetivo apresentar informações sobre a empresa, divulgar os produtos e serviços oferecidos e disponibilizar um canal de comunicação direto com os clientes.
+
+Estrutura do Site:
+
+Todas as páginas possuem um menu de navegação no topo
+As 3 Abas pedidas (Produtos, fale conosco, Quem somos)
+Homepage
+
+Detalhamento Das páginas:
+
+Quem somos:
+
+Texto no meio e 2 imagens, uma em cada lado
+
+
+Produtos e Serviços
+
+Catálogo 4X2 com imagens alinhadas
+Em baixo do catálogo a parte faça seu orçamento
+Botão escrito fale conosco
+
+Fale conosco
+
+Whatsapp
+Email
+Endereço
+Celular
+
