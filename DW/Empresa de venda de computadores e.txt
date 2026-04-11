@@ -4,36 +4,40 @@ Nome da empresa: Mundo Informática
 
 Objetivo da Empresa:
 
-Venda de periféricos de computador e manutenção.
-
+Venda de peças e periféricos de computador.
 
 Objetivo Do site:
 
-O site da empresa tem como objetivo apresentar informações sobre a empresa, divulgar os produtos e serviços oferecidos e disponibilizar um canal de comunicação direto com os clientes.
+O site da empresa tem como objetivo apresentar informações sobre a empresa, vender seus produtos de forma remota e disponibilizar um canal de comunicação direto com os clientes.
 
 Estrutura do Site:
 
 Todas as páginas possuem um menu de navegação no topo
-As 3 Abas pedidas (Produtos, fale conosco, Quem somos)
-Homepage
+O site possui 6 possíveis interfaces
+
+1- Homepage
+2- Catálogo
+3- Sobre nós
+4- Contatos
+5- Pedido
+6- Pagamento
 
 Detalhamento Das páginas:
 
-Quem somos:
+Homepage: Pagina inicial com uma barra de Featured
 
-Texto no meio e 2 imagens, uma em cada lado
+Catálogo: Catálogo com carrinho e filtros
 
+Sobre nós: Explica quem somos, nossos objetivos e mais
 
-Produtos e Serviços
-
-Catálogo 4X2 com imagens alinhadas
-Em baixo do catálogo a parte faça seu orçamento
-Botão escrito fale conosco
-
-Fale conosco
-
+Contatos: Possui nossos contatos principais:
 Whatsapp
 Email
 Endereço
 Celular
+E mostra a localização da loja
 
+Pedido: Tela para inserção de informações para a compra
+
+
+Pagamento: Mostra os detalhes da compra e informações para o pagamento
