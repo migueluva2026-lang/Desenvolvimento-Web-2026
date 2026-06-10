@@ -6,8 +6,8 @@
     <title>Mundo Informática</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script type="module" src="/assets/js/script.js" defer></script>
 </head>
 <body>
 
@@ -23,20 +23,51 @@
             <a href="#catalogo" class="menu-element">CATÁLOGO</a>
             <a href="#contatos" class="menu-element">CONTATOS</a>
             <a href="#sobre-nos" class="menu-element">SOBRE NÓS</a>
+            <a href="#admin-produtos" class="menu-element admin-btn" id="admin-nav-btn" style="display:none; color:#d4a574;">ADMIN PANEL</a>
+            <div id="user-menu-container">
+                <button id="user-menu-btn"> 👤 </button>
+                <div id="user-dropdown" class="hidden">
+                    <button id="login-option">Login</button>
+                    <button id="signup-option">Criar Conta</button>
+                    <button id="logout-option" style="display:none;"> Sair </button>
+                </div>
+            </div>
+        </nav>
         </nav>
     </header>
 
     <main>
 
+        <!-- LOGIN -->
+        <section id="login" class="page-hidden">
+            <div class="login-container">
+                <div class="login-box">
+                    <h2 class="login-title">Login</h2>
+                    <form id="login-form" novalidate>
+                        <div class="fg">
+                            <label for="login-user">Usuário</label>
+                            <input type="text" id="login-user" placeholder="Digite seu usuário">
+                        </div>
+                        <div class="fg">
+                            <label for="login-pass">Senha</label>
+                            <input type="password" id="login-pass" placeholder="Digite sua senha">
+                        </div>
+                        <button type="submit" class="btn-login">Entrar</button>
+                    </form>
+                    <p class="login-hint">Para Admin: admin / admin</p>
+                </div>
+            </div>
+        </section>
+
         <!-- HOMEPAGE -->
-        <section id="homepage" class="page-hidden">
+        <section id="homepage" class="page-active">
             <div class="barra-inicial">
                 <h2 class="promo-title">Promoções</h2>
                 <div id="featured-products" class="featured-grid"></div>
             </div>
             <div class="second-bar">
                 <div class="second-bar-info">
-                    <span>Frete Grátis Na 1a Compra!</span>
+                    <span>Frete Grátis Na 1ª Compra!</span>
                     <span>50% OFF Em Monitores ASUS</span>
                     <span>USE: MUNDOINFO50</span>
                     <span>15% OFF NO PIX</span>
@@ -114,7 +145,7 @@
                 </div>
             </div>
             <div id="store-photo-wrap">
-                <img src="/img/sobre1.jpg">
+                <img src="assets/img/sobre1.jpg" alt="Foto da loja">
             </div>
         </section>
 
@@ -124,7 +155,7 @@
                 <h2 class="sobre-title">Sobre Nós</h2>
                 <div id="sobre-cols">
                     <div class="sobre-photo">
-                        <img src="/img/sobre1.jpg">
+                        <img src="assets/img/sobre1.jpg" alt="Foto da loja">
                     </div>
                     <div id="sobre-text-box">
                         <p>A Mundo Informática é uma empresa especializada na venda de computadores, periféricos e serviços de manutenção em equipamentos de informática. Nosso objetivo é oferecer soluções tecnológicas de qualidade para atender às necessidades de clientes residenciais e profissionais.</p>
@@ -134,7 +165,7 @@
                         <p>Nossa missão é proporcionar atendimento de qualidade, produtos confiáveis e soluções eficientes para garantir o melhor desempenho dos equipamentos de nossos clientes. Buscamos sempre acompanhar as evoluções da tecnologia para oferecer serviços atualizados e atender com excelência.</p>
                     </div>
                     <div class="sobre-photo">
-                        <img src="/img/sobre2.jpg">
+                        <img src="assets/img/sobre2.jpg" alt="Foto da loja">
                     </div>
                 </div>
             </div>
@@ -143,6 +174,71 @@
                 <span>Horário de Atendimento: 08:00 às 20:00</span>
                 <a href="#" class="footer-link">Trabalhe Conosco</a>
             </footer>
+        </section>
+
+        <!-- LISTA DE PRODUTOS -->
+        <section id="admin-produtos" class="page-hidden">
+            <div class="admin-wrapper">
+                <div class="admin-header">
+                    <h2 class="admin-title">Gerenciar Produtos</h2>
+                    <button id="btn-novo-produto" class="btn-novo">+ Novo Produto</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table id="admin-produtos-table" class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Nome</th>
+                                <th>Marca</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-produtos-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATUALIZAR PRODUTO -->
+        <section id="admin-produto-update" class="page-hidden">
+            <div class="admin-wrapper">
+                <h2 class="admin-title">Atualizar Produto</h2>
+                <form id="admin-produto-update-form" class="admin-form" novalidate>
+                    <div class="form-grid">
+                        <div class="fg">
+                            <label>Nome do Produto</label>
+                            <input type="text" id="update-name" required>
+                        </div>
+                        <div class="fg">
+                            <label>Marca</label>
+                            <input type="text" id="update-brand" required>
+                        </div>
+                        <div class="fg">
+                            <label>Categoria</label>
+                            <input type="text" id="update-category" required>
+                        </div>
+                        <div class="fg">
+                            <label>Preço</label>
+                            <input type="number" id="update-price" step="0.01" required>
+                        </div>
+                        <div class="fg full-width">
+                            <label>Descrição</label>
+                            <textarea id="update-desc" rows="4"></textarea>
+                        </div>
+                        <div class="fg">
+                            <label>Quantidade em Estoque</label>
+                            <input type="number" id="update-stock" required>
+                        </div>
+                    </div>
+                    <div class="admin-actions">
+                        <button type="submit" class="btn-save">Salvar Alterações</button>
+                        <button type="button" id="btn-voltar-admin" class="btn-cancel">Cancelar</button>
+                    </div>
+                </form>
+            </div>
         </section>
 
         <!-- PRODUTO -->

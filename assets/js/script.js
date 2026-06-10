@@ -3,17 +3,29 @@
 // Também dá fetch no backend
 //
 
-import productsData from "./db/products.js";
+import { productsData } from "/database/products.js";
 
 let carrinho = [];
 let currentProduct = null;
 let orderData = {};
+
+let isAdmin = false;
+let currentEditingProductId = null;
+
+let logoutBtn = document.getElementById("logout-option") || null;
 
 const pages = document.querySelectorAll("main > section");
 
 function trocarPagina() 
 {
     let hash = window.location.hash || "#homepage";
+
+    if (hash === "#admin-produto-update" && !currentEditingProductId) {
+        hash = "#admin-produtos";
+    }
+    if (hash === "#admin-produtos" && isAdmin === false) {
+        hash = "#login";
+    }
 
     // product route: #produto?id=Produto-001
     if (hash.startsWith("#produto?") || hash.startsWith("#produto?id")) {
@@ -40,6 +52,8 @@ function trocarPagina()
     if (hash === "#catalogo")  renderCatalogo();
     if (hash === "#pedido")    renderItensCompra();
     if (hash === "#pagamento") renderPagamento();
+    if (hash === "#admin-produtos") renderAdminProdutos();
+    if (hash === "#admin-produto-update") renderAdminProdutoUpdate();
 }
 
 //  Página inicial
@@ -233,6 +247,25 @@ function renderPagamento()
     document.getElementById("pag-local").textContent  = orderData.endereco || "--";
 }
 
+// Admin - Login
+function handleLogin(username, password) {
+    if (username === "admin" && password === "admin") {
+        isAdmin = true;
+        document.getElementById("admin-nav-btn").style.display = "inline-block";
+        window.location.hash = "#admin-produtos";
+        logoutBtn.style.display = "inline-block";
+    } else {
+        alert("Usuário ou senha inválidos!");
+    }
+}
+
+// Admin - Logout
+function handleLogout() {
+    isAdmin = false;
+    document.getElementById("admin-nav-btn").style.display = "none";
+    window.location.hash = "#homepage";
+}
+
 //  LISTENERS
 function criarListeners() 
 {
@@ -259,12 +292,43 @@ function criarListeners()
         e.preventDefault();
         window.location.hash = "#homepage";
     });
+
+    document.getElementById("login-option")?.addEventListener("click", () => {
+        window.location.hash = "#login";
+    });
+
+    document.getElementById("signup-option")?.addEventListener("click", () => {
+        window.location.hash = "#login";
+    });
+
+    // Login
+    document.getElementById("login-form")?.addEventListener("submit", e => {
+        e.preventDefault(); 
+        const username = document.getElementById("login-user").value;
+        const password = document.getElementById("login-pass").value;
+        handleLogin(username, password);
+    });
+
+    // Logout
+    logoutBtn?.addEventListener("click", e => {
+        e.preventDefault();
+        handleLogout();
+    });
+
+    // Admin - Botão de voltar
+    document.getElementById("btn-voltar-admin")?.addEventListener("click", () => {
+        window.location.hash = "#admin-produtos";
+    });
 }
 
-//  Chama função de hash da página
+// Chama função de hash da página
 window.addEventListener("load", () => {
     trocarPagina();
     criarListeners();
 });
 
 window.addEventListener("hashchange", trocarPagina);
+
+// Exporta funções globais para serem usadas em eventos inline (como onclick)
+window.handleLogout = handleLogout;
+window.removerDoCarrinho = removerDoCarrinho;
