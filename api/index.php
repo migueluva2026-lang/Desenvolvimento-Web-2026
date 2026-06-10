@@ -31,7 +31,7 @@ $produtos = $stmt->fetchAll();
             <td><?= htmlspecialchars($produto['id_product']) ?></td>
             <td><?= htmlspecialchars($produto['description']) ?></td>
             <td>
-                <a href="edit.php?id=<?= $produto['id_product'] ?>">Editar</a>
+                <a href="update.php?id=<?= $produto['id_product'] ?>">Editar</a>
                 <a href="delete.php?id=<?= $produto['id_product'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
             </td>
         </tr>

@@ -5,10 +5,19 @@ Decidi fazer o site SPA, devido sua natureza (Ser um site com poucas views, meno
 Isso é importante por basicamente me obrigar a fazer um routing "manual"
 Seria possível fazer um routing de barras ao invés do padrão de hashs de um browser, mas levaria bastante tempo para desenvolver um.
 
+2- Integração com PHP
+
+Como o site precisa ter um db com interface em php, somado com o fato do site já ter sua estrutura baseada em vanilla JS, vou tratar o php
+como uma API/backend e dar fetch nele
+
+3- Organização de pastas
+Separei uma folder para a API em PhP, os arquivos de estilização e lógica do frontend ficam no assets/
+O banco de dados tem sua própria pasta
+
+
 Backend:
 
 Entidades
-
 1- Client (Cliente)
 
 id_client (PK)

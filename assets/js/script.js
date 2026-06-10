@@ -1,8 +1,9 @@
 // 
-// Array de produtos, renderiza paginas dinamicamente, valida algumas coisas 
-// 
+// Array de produtos, renderiza paginas dinamicamente, faz validações, controla o carrinho e o fluxo de compra (por enquanto)
+// Também dá fetch no backend
+//
 
-import productsData from "./products.js";
+import productsData from "./db/products.js";
 
 let carrinho = [];
 let currentProduct = null;
@@ -10,7 +11,8 @@ let orderData = {};
 
 const pages = document.querySelectorAll("main > section");
 
-function trocarPagina() {
+function trocarPagina() 
+{
     let hash = window.location.hash || "#homepage";
 
     // product route: #produto?id=Produto-001
@@ -41,8 +43,8 @@ function trocarPagina() {
 }
 
 //  Página inicial
-
-function renderHomepage() {
+function renderHomepage() 
+{
     const grid = document.getElementById("featured-products");
     if (!grid) return;
     grid.innerHTML = "";
@@ -71,8 +73,8 @@ function renderHomepage() {
 }
 
 //  Catálogo
-
-function renderCatalogo() {
+function renderCatalogo() 
+{
     const grid = document.getElementById("catalogo-grid");
     if (!grid) return;
     grid.innerHTML = "";
@@ -99,8 +101,8 @@ function renderCatalogo() {
 }
 
 //  PRODUTO 
-
-function loadProduct(id) {
+function loadProduct(id) 
+{
     const produtoAtual = productsData.find(x => x.id === id);
     currentProduct = produtoAtual;
 
@@ -121,8 +123,8 @@ function loadProduct(id) {
     }
 
     // Painel de informações do produto
-    document.getElementById("prod-sale").textContent       = produtoAtual.price;
-    document.getElementById("prod-orig").textContent       = produtoAtual.originalPrice;
+    document.getElementById("prod-sale").textContent = produtoAtual.price;
+    document.getElementById("prod-orig").textContent = produtoAtual.originalPrice;
 
     // Imagens do produto
     const thumbWrap = document.getElementById("produto-thumbs");
@@ -145,8 +147,8 @@ function loadProduct(id) {
 }
 
 //  CARRINHO 
-
-function adicionarAoCarrinho(product, qty = 1) {
+function adicionarAoCarrinho(product, qty = 1) 
+{
     const existing = carrinho.find(i => i.id === product.id);
     if (existing) {
         existing.quantity += qty;
@@ -156,16 +158,19 @@ function adicionarAoCarrinho(product, qty = 1) {
     renderCarrinho();
 }
 
-function removerDoCarrinho(id) {
+function removerDoCarrinho(id) 
+{
     carrinho = carrinho.filter(i => i.id !== id);
     renderCarrinho();
 }
 
-function TotalCarrinho() {
+function TotalCarrinho() 
+{
     return carrinho.reduce((s, i) => s + i.price * i.quantity, 0);
 }
 
-function renderCarrinho() {
+function renderCarrinho() 
+{
     const listaCarrinho = document.getElementById("cart-items-list");
     if (!listaCarrinho) return;
     listaCarrinho.innerHTML = "";
@@ -190,8 +195,8 @@ function renderCarrinho() {
 }
 
 // Detalhes do pedido
-
-function renderItensCompra() {
+function renderItensCompra() 
+{
     const listaProdutos  = document.getElementById("pedido-items-resume");
     const total = document.getElementById("pedido-total-val");
     if (!listaProdutos) return;
@@ -218,8 +223,8 @@ function renderItensCompra() {
 }
 
 //  PAGAMENTO
-
-function renderPagamento() {
+function renderPagamento() 
+{
     let t = TotalCarrinho();
     document.getElementById("pag-valor").textContent  = t;
     document.getElementById("pag-codigo").textContent = "#" + Math.random().toString(36).substring(2, 10).toUpperCase(); // Gera um número aleatório
@@ -229,8 +234,8 @@ function renderPagamento() {
 }
 
 //  LISTENERS
-function criarListeners() {
-
+function criarListeners() 
+{
     document.getElementById("add-cart-btn")?.addEventListener("click", () => {
         adicionarAoCarrinho(currentProduct);
     });
