@@ -1,0 +1,42 @@
+Empresa de venda de computadores e manutenção
+
+Nome da empresa: Mundo Informática
+
+Objetivo da Empresa:
+
+Venda de peças e periféricos de computador.
+
+Objetivo Do site:
+
+O site da empresa tem como objetivo apresentar informações sobre a empresa, vender seus produtos de forma remota e disponibilizar um canal de comunicação direto com os clientes.
+
+Estrutura do Site:
+
+Todas as páginas possuem um menu de navegação no topo
+O site possui 6 possíveis interfaces
+
+1- Homepage
+2- Catálogo
+3- Sobre nós
+4- Contatos
+5- Pedido
+6- Pagamento
+
+Detalhamento Das páginas:
+
+Homepage: Pagina inicial com uma barra de Featured
+
+Catálogo: Catálogo com carrinho e filtros
+
+Sobre nós: Explica quem somos, nossos objetivos e mais
+
+Contatos: Possui nossos contatos principais:
+Whatsapp
+Email
+Endereço
+Celular
+E mostra a localização da loja
+
+Pedido: Tela para inserção de informações para a compra
+
+Pagamento: Mostra os detalhes da compra e informações para o pagamento

@@ -1,0 +1,36 @@
+Frontend:
+
+1- SPA
+Decidi fazer o site SPA, devido sua natureza (Ser um site com poucas views, menor)
+Isso é importante por basicamente me obrigar a fazer um routing "manual"
+Seria possível fazer um routing de barras ao invés do padrão de hashs de um browser, mas levaria bastante tempo para desenvolver um.
+
+Backend:
+
+Entidades
+
+1- Client (Cliente)
+
+id_client (PK)
+name
+email
+number
+address
+
+
+2- Product (Produto)
+id_product (PK)
+name
+brand
+description
+value
+category
+stock
+
+3- Order (Pedido)
+id_order (PK)
+date_order
+amount
+status
+location
+id_client (Foreign Key, vem de Client)
