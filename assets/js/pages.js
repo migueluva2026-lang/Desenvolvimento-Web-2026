@@ -7,7 +7,7 @@ export function renderHomepage() {
     grid.innerHTML = "";
 
     state.productsData
-        .filter(p => p.featured)
+        .filter(p => Number(p.featured) === 1) // Filtra apenas pros filtered funcionarem
         .forEach(product => {
             const card = document.createElement("div");
             card.className = "card-produto";

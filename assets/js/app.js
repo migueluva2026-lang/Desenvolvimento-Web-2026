@@ -64,7 +64,7 @@ function handleLogout() {
 // ---- API --------------------------------------------------------------------
 
 async function loadProducts() {
-    const response = await fetch("/api/products.php");
+    const response = await fetch("api/products/list.php");
     state.productsData = await response.json();
 }
 
