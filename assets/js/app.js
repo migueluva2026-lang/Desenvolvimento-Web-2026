@@ -1,7 +1,7 @@
 import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderHomepage, renderCatalogo, loadProduct, renderItensCompra, renderPagamento } from './pages.js';
+import { renderHomepage, renderCatalogo, loadProduct, renderItensCompra, renderPagamento, initCatalogoFilters } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
 
 const pages = document.querySelectorAll("main > section");
@@ -123,6 +123,8 @@ function criarListeners() {
 
 window.addEventListener("load", async () => {
     await loadProducts();
+
+    initCatalogoFilters();
     trocarPagina();
     criarListeners();
 });

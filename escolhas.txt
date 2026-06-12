@@ -11,14 +11,22 @@ Como o site precisa ter um db com interface em php, somado com o fato do site j�
 como uma API/backend e dar fetch nele
 
 3- Organização de pastas
+
+Modularizei o JavaScript para dividir as funções
 Separei uma folder para a API em PhP, os arquivos de estilização e lógica do frontend ficam no assets/
 O banco de dados tem sua própria pasta
+
+4- db
+
+Foi feita uma transição do productsData.JS para o db, para isso eu fiz um seed com produtos iniciais
+Futuramente, seria bom fazer um cliente padrão para realmente verificar a questão do admin
 
 
 Backend:
 
 Entidades
-1- Client (Cliente)
+
+1- Client
 
 id_client (PK)
 name
@@ -27,19 +35,33 @@ number
 address
 
 
-2- Product (Produto)
+2- Product
+
 id_product (PK)
+sku                       Sku = código bonitinho que um produto tem perto do código de barras
 name
 brand
 description
-value
+price
+original_price
 category
 stock
+image_card        
+featured         <-- se está como destaque na page inial
 
-3- Order (Pedido)
+3- Product Images
+id_image
+id_product
+image_path
+sort_order
+
+
+4- Order (Pedido)
 id_order (PK)
 date_order
 amount
 status
 location
 id_client (Foreign Key, vem de Client)
+
+4- Order-product 

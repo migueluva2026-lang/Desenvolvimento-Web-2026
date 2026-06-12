@@ -30,29 +30,97 @@ export function renderHomepage() {
 export function renderCatalogo() {
     const grid = document.getElementById("catalogo-grid");
     if (!grid) return;
+
     grid.innerHTML = "";
 
-    [...state.productsData]
-        .sort((a, b) => b.price - a.price)
-        .forEach(product => {
-            const card = document.createElement("div");
-            card.className = "cat-card";
-            card.innerHTML = `
-                <img src="${product.image_card}" alt="${product.name}">
-                <div class="cat-card-info">
-                    <h3>${product.name}</h3>
-                    <p class="cat-card-price">${formatPrice(product.price)}</p>
-                    ${!product.stock_quantity ? '<p class="cat-card-oos">Fora de estoque</p>' : ''}
-                </div>
-            `;
-            card.addEventListener("click", () => {
-                window.location.hash = `#produto?id=${product.id_product}`;
-            });
-            grid.appendChild(card);
+    let products = [...state.productsData];
+
+    // Marcas selecionadas
+    const selectedBrands = [
+        ...document.querySelectorAll(".brand-filter:checked")
+    ].map(checkbox => checkbox.value);
+
+    // Categorias selecionadas
+    const selectedCategories = [
+        ...document.querySelectorAll(".cat-filter:checked")
+    ].map(checkbox => checkbox.value);
+
+    // Preço máximo
+    const maxPrice = Number(
+        document.getElementById("price-range")?.value || 10000
+    );
+
+    // Filtro de marcas
+    if (selectedBrands.length > 0) {
+        products = products.filter(product =>
+            selectedBrands.includes(product.brand)
+        );
+    }
+
+    // Filtro de categorias
+    if (selectedCategories.length > 0) {
+        products = products.filter(product =>
+            selectedCategories.includes(product.category)
+        );
+    }
+
+    // Filtro de preço
+    products = products.filter(product =>
+        Number(product.price) <= maxPrice
+    );
+
+    // Ordenação
+    const sortValue =
+        document.getElementById("sort-select")?.value ||
+        "most-expensive";
+
+    switch (sortValue) {
+        case "cheapest":
+            products.sort((a, b) => a.price - b.price);
+            break;
+
+        case "name-az":
+            products.sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+            break;
+
+        case "most-expensive":
+        default:
+            products.sort((a, b) => b.price - a.price);
+            break;
+    }
+
+    // Renderização
+    products.forEach(product => {
+        const card = document.createElement("div");
+
+        card.className = "cat-card";
+
+        card.innerHTML = `
+            <img src="${product.image_card}" alt="${product.name}">
+            <div class="cat-card-info">
+                <h3>${product.name}</h3>
+                <p class="cat-card-price">${formatPrice(product.price)}</p>
+                ${
+                    Number(product.stock_quantity) === 0
+                        ? '<p class="cat-card-oos">Fora de estoque</p>'
+                        : ''
+                }
+            </div>
+        `;
+
+        card.addEventListener("click", () => {
+            window.location.hash =
+                `#produto?id=${product.id_product}`;
         });
+
+        grid.appendChild(card);
+    });
 }
 
-export function loadProduct(id) {
+export function loadProduct(id) 
+{
     // == intencional: id da URL é string, id_product do banco é número
     const produto = state.productsData.find(x => x.id_product == id);
     if (!produto) return;
@@ -93,7 +161,8 @@ export function loadProduct(id) {
     renderCarrinho();
 }
 
-export function renderItensCompra() {
+export function renderItensCompra() 
+{
     const lista = document.getElementById("pedido-items-resume");
     const total = document.getElementById("pedido-total-val");
     if (!lista) return;
@@ -118,10 +187,33 @@ export function renderItensCompra() {
     if (total) total.textContent = formatPrice(totalCarrinho());
 }
 
-export function renderPagamento() {
+export function renderPagamento() 
+{
     document.getElementById("pag-valor").textContent  = formatPrice(totalCarrinho());
     document.getElementById("pag-codigo").textContent = "#" + Math.random().toString(36).substring(2, 10).toUpperCase();
     document.getElementById("pag-data").textContent   = new Date().toLocaleDateString("pt-BR");
     document.getElementById("pag-dest").textContent   = state.orderData.nome     || "--";
     document.getElementById("pag-local").textContent  = state.orderData.endereco || "--";
+}
+
+export function initCatalogoFilters() 
+{
+
+    document.querySelectorAll(".brand-filter").forEach(checkbox =>
+            checkbox.addEventListener("change", renderCatalogo)
+        );
+
+    document.querySelectorAll(".cat-filter").forEach(checkbox =>
+            checkbox.addEventListener("change", renderCatalogo)
+        );
+
+    document.getElementById("price-range")?.addEventListener("input", e => {
+            document.getElementById("price-value").textContent =
+                `Até ${formatPrice(e.target.value)}`;
+
+            renderCatalogo();
+        });
+
+    document.getElementById("sort-select")
+        ?.addEventListener("change", renderCatalogo);
 }

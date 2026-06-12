@@ -26,7 +26,7 @@
             <a href="#admin-produtos" class="menu-element admin-btn" id="admin-nav-btn" style="display:none; color:#d4a574;">ADMIN PANEL</a>
             <div id="user-menu-container">
                 <button id="user-menu-btn"> 👤 </button>
-                <div id="user-dropdown" class="hidden">
+                <div id="user-dropdown" class="page-hidden">
                     <button id="login-option">Login</button>
                     <button id="signup-option">Criar Conta</button>
                     <button id="logout-option" style="display:none;"> Sair </button>
@@ -62,7 +62,7 @@
         <!-- HOMEPAGE -->
         <section id="homepage" class="page-active">
             <div class="barra-inicial">
-                <h2 class="promo-title">Promoções</h2>
+                <h2 class="promo-title">Promoções em Destaque</h2>
                 <div id="featured-products" class="featured-grid"></div>
             </div>
             <div class="second-bar">
@@ -107,9 +107,9 @@
             <div id="catalogo-content">
                 <div id="catalogo-barra">
                     <select id="sort-select">
-                        <option value="most-expensive">Sort by: Most Expensive</option>
-                        <option value="cheapest">Sort by: Cheapest</option>
-                        <option value="name-az">Sort by: Name A-Z</option>
+                        <option value="most-expensive">Ordenar por: Mais caro</option>
+                        <option value="cheapest">Ordenar por: Mais barato</option>
+                        <option value="name-az">Ordenar por: Nome A-Z</option>
                     </select>
                     <div id="grid-toggle">
                         <button class="grid-btn active" data-cols="4">Grid: 4x</button>
@@ -176,7 +176,7 @@
             </footer>
         </section>
 
-        <!-- LISTA DE PRODUTOS -->
+        <!-- ADMIN - LISTA DE PRODUTOS -->
         <section id="admin-produtos" class="page-hidden">
             <div class="admin-wrapper">
                 <div class="admin-header">
@@ -202,7 +202,7 @@
             </div>
         </section>
 
-        <!-- ATUALIZAR PRODUTO -->
+        <!-- ADMIN - ATUALIZAR PRODUTO -->
         <section id="admin-produto-update" class="page-hidden">
             <div class="admin-wrapper">
                 <h2 class="admin-title">Atualizar Produto</h2>
@@ -241,7 +241,7 @@
             </div>
         </section>
 
-        <!-- PRODUTO -->
+        <!-- ADMIN -  PRODUTO -->
         <section id="produto" class="page-hidden">
             <div id="produto-gallery">
                 <img id="produto-main-img">

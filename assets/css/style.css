@@ -22,7 +22,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 44px;
+    height: 55px;
     background-color: #3d3d3d;
     z-index: 1000;
 }
@@ -45,7 +45,7 @@ header {
     background-color: #fff;
     border-radius: 20px;
     overflow: hidden;
-    height: 28px;
+    height: 33px;
 }
 
 #search-input {
@@ -86,6 +86,10 @@ header {
 }
 
 #user-dropdown{
+    display:flex;
+    flex-direction:column;
+    z-index:999;
+
     position:absolute;
     top:50px;
     right:0;
@@ -94,10 +98,17 @@ header {
     background:white;
     border-radius:8px;
     box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
 
-    display:flex;
-    flex-direction:column;
-    z-index:999;
+#user-dropdown::before{
+    content: "";
+    position: absolute;
+
+    top: -8px;
+    left: 0;
+    right: 0;
+
+    height: 8px;
 }
 
 #user-dropdown button{
@@ -108,12 +119,20 @@ header {
     text-align:left;
 }
 
+#user-dropdown.page-hidden {
+    display: none;
+}
+
 #user-dropdown button:hover{
     background:#f3f4f6;
 }
 
+#user-menu-container:hover #user-dropdown {
+    display: flex;
+}
+
 main {
-    padding-top: 44px;
+    padding-top: 2.6rem;
     width: 100%;
     min-height: 100vh;
 }
@@ -130,23 +149,30 @@ section {
 
 #homepage {
     flex-direction: column;
-    align-items: stretch;
-    background-color: #E0E0E0;
+    background: #E0E0E0;
+    min-height: 100vh;
+    max-height: 100vh;
 }
 
 .barra-inicial {
-    height: 50vh;
-    margin-top: 50px;
-    margin-bottom: 200px;
-    background-color: #846cdb;
-    padding: 36px 5% 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    background: linear-gradient(135deg, #846cdb 0%,#6d52d9 100%);
+
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 5vw, 5rem);
 }
 
 .promo-title {
-    font-size: 2rem;
+    width: 100%;
+    max-width: 90%;
+
+    font-size: clamp(2rem, 4vw, 3rem);
     color: white;
-    letter-spacing: 3px;
-    margin-bottom: 24px;
+
+    margin-bottom: 2rem;
 }
 
 .featured-grid {
@@ -157,23 +183,21 @@ section {
 }
 
 .card-produto {
-    display: flex;
-    background-color: white;
-    border-radius: 12px;
-    padding: 16px;
-    gap: 14px;
-    align-items: flex-start;
-    max-width: 600px;
-    min-height: 300px;
+    background: white;
+    gap: 1.25rem;
+
+    padding: 1.25rem;
+    border-radius: 16px;
+
     cursor: pointer;
 }
 
 .card-produto img {
-    width: 240px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     object-fit: contain;
-    border-radius: 6px;
-    background-color: #f5f5f5;
+    background: #fafafa;
+    border-radius: 12px;
     flex-shrink: 0;
 }
 
@@ -347,71 +371,88 @@ section {
     gap: 5vw;
 }
 
+/* MAPA */
+
 #map-container {
-    margin-left: 4vw;
-    flex: 1;
-    min-height: calc(100vh - 44px);
-    max-width: 600px;
+    flex: 1 1 450px;
+    min-width: 300px;
+    max-width: 650px;
 }
 
 #map-container iframe {
     width: 100%;
     height: 100%;
+    min-height: 500px;
     border: none;
+    border-radius: 12px;
     display: block;
 }
 
+/* CENTRO */
+
 #contatos-center {
+    flex: 0 1 400px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
-    min-width: 300px;
+
     background-color: #2A196B;
     color: #fff;
-    padding: 40px 22px;
-    gap: 22px;
+
+    border-radius: 12px;
+    padding: clamp(1.5rem, 2vw, 2.5rem);
+
+    min-height: 500px;
+}
+
+#contatos-center h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
 }
 
 .contact-list {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.75rem;
 }
 
 .contact-item {
-    background-color: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 0.77rem;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
 }
 
 .contatos-address {
-    font-size: 0.77rem;
-    color: #bbb;
-    text-align: center;
     margin-top: auto;
-    line-height: 1.6;
+    text-align: center;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
 }
 
+/* DIREITA */
+
 #store-photo-wrap {
-    margin-top: 20vh;
-    width: 500px;
-    min-width: 250px;
-    max-height: 500px;
-    overflow: hidden;
+    flex: 1 1 320px;
+    min-width: 280px;
+    max-width: 500px;
+    align-self: center;
 }
 
 #store-photo-wrap img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
+    border-radius: 12px;
     display: block;
 }
 
-/* SOBRE NÓS */
+/*  SOBRE NÓS ---------- */
 
 #sobre-nos {
     flex-direction: column;
