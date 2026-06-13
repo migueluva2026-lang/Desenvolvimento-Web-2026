@@ -1,14 +1,14 @@
 import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderHomepage, renderCatalogo, loadProduct, renderItensCompra, renderPagamento, initCatalogoFilters } from './pages.js';
+import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
 
 const pages = document.querySelectorAll("main > section");
 
 // ---- ROTEADOR ----------------------------------------------------------------
 
-function trocarPagina() {
+function changePage() {
     let hash = window.location.hash || "#homepage";
 
     if (hash === "#admin-produto-update" && !state.currentEditingProductId) hash = "#admin-produtos";
@@ -17,7 +17,7 @@ function trocarPagina() {
     if (hash.startsWith("#produto?")) {
         const params = new URLSearchParams(hash.replace("#produto?", ""));
         const id = params.get("id");
-        if (id) loadProduct(id);
+        if (id) renderProduct(id);
         hash = "#produto";
     }
 
@@ -44,33 +44,58 @@ function trocarPagina() {
 
 // ---- AUTH ------------------------------------------------------------------
 
-function handleLogin(username, password) {
-    if (username === "admin" && password === "admin") {
+export async function handleLogin( username, password) 
+{
+    try {
+        const response = await fetch("/DesenWeb2026/api/auth/login.php",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            }
+        );
+        const result = await response.json();
+        if (!result.success)
+        {
+            alert("Usuário ou senha inválidos!");
+            return;
+        }
+
         state.isAdmin = true;
-        document.getElementById("admin-nav-btn").style.display  = "inline-block";
-        document.getElementById("logout-option").style.display  = "inline-block";
+
+        document.getElementById("admin-nav-btn").style.display = "inline-block";
+        document.getElementById("logout-option").style.display = "inline-block";
         window.location.hash = "#admin-produtos";
-    } else {
-        alert("Usuário ou senha inválidos!");
+    } catch (error) {
+        console.error(error);
+        alert("Erro ao efetuar login.");
     }
 }
 
 function handleLogout() {
     state.isAdmin = false;
     document.getElementById("admin-nav-btn").style.display = "none";
+    document.getElementById("logout-option").style.display = "none";
     window.location.hash = "#homepage";
 }
 
 // ---- API --------------------------------------------------------------------
 
-async function loadProducts() {
-    const response = await fetch("api/products/list.php");
+async function loadProducts() 
+{
+    const response = await fetch("/DesenWeb2026/api/products/list.php");
     state.productsData = await response.json();
 }
 
 // ---- LISTENERS ---------------------------------------------------------------
 
-function criarListeners() {
+function createListeners() 
+{
     document.getElementById("add-cart-btn")?.addEventListener("click", () => {
         if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
     });
@@ -114,22 +139,40 @@ function criarListeners() {
         handleLogout();
     });
 
+    document.getElementById("btn-novo-prod")?.addEventListener("click", () => {
+        state.currentEditingProductId = null;
+        window.location.hash = "#admin-produto-create";
+    });
+
     document.getElementById("btn-voltar-admin")?.addEventListener("click", () => {
         window.location.hash = "#admin-produtos";
     });
+
+    document.querySelectorAll(".brand-filter").forEach(checkbox =>
+        checkbox.addEventListener("change", renderCatalogo)
+    );
+
+    document.querySelectorAll(".cat-filter").forEach(checkbox =>
+        checkbox.addEventListener("change", renderCatalogo)
+    );
+
+    document.getElementById("price-range")?.addEventListener("input", e => {
+        document.getElementById("price-value").textContent = `Até ${formatPrice(e.target.value)}`;
+        renderCatalogo();
+    });
+
+    document.getElementById("sort-select")?.addEventListener("change", renderCatalogo);
 }
 
 // ---- INIT ----------------------------------------------------------------
 
 window.addEventListener("load", async () => {
     await loadProducts();
-
-    initCatalogoFilters();
-    trocarPagina();
-    criarListeners();
+    changePage();
+    createListeners();
 });
 
-window.addEventListener("hashchange", trocarPagina);
+window.addEventListener("hashchange", changePage);
 
 // Globais necessários para handlers inline (onclick, por ex)
 window.removerDoCarrinho = removerDoCarrinho;

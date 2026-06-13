@@ -10,7 +10,7 @@ export function renderHomepage() {
         .filter(p => Number(p.featured) === 1) // Filtra apenas pros filtered funcionarem
         .forEach(product => {
             const card = document.createElement("div");
-            card.className = "card-produto";
+            card.className = "card-featured";
             card.innerHTML = `
                 <img src="${product.image_card}" alt="${product.name}">
                 <div class="feat-info">
@@ -46,9 +46,7 @@ export function renderCatalogo() {
     ].map(checkbox => checkbox.value);
 
     // Preço máximo
-    const maxPrice = Number(
-        document.getElementById("price-range")?.value || 10000
-    );
+    const maxPrice = Number(document.getElementById("price-range")?.value || 10000);
 
     // Filtro de marcas
     if (selectedBrands.length > 0) {
@@ -65,14 +63,10 @@ export function renderCatalogo() {
     }
 
     // Filtro de preço
-    products = products.filter(product =>
-        Number(product.price) <= maxPrice
-    );
+    products = products.filter(product => Number(product.price) <= maxPrice);
 
     // Ordenação
-    const sortValue =
-        document.getElementById("sort-select")?.value ||
-        "most-expensive";
+    const sortValue = document.getElementById("sort-select")?.value || "most-expensive";
 
     switch (sortValue) {
         case "cheapest":
@@ -119,7 +113,7 @@ export function renderCatalogo() {
     });
 }
 
-export function loadProduct(id) 
+export function renderProduct(id) 
 {
     // == intencional: id da URL é string, id_product do banco é número
     const produto = state.productsData.find(x => x.id_product == id);
@@ -131,9 +125,9 @@ export function loadProduct(id)
     if (mainImg) mainImg.src = primeiraImagem;
 
     document.getElementById("produto-title").textContent = produto.name;
-    document.getElementById("produto-desc").textContent  = produto.description;
-    document.getElementById("prod-sale").textContent     = formatPrice(produto.price);
-    document.getElementById("prod-orig").textContent     = formatPrice(produto.original_price);
+    document.getElementById("produto-desc").textContent = produto.description;
+    document.getElementById("prod-sale").textContent = formatPrice(produto.price);
+    document.getElementById("prod-orig").textContent = formatPrice(produto.original_price);
 
     const stockInfo = document.getElementById("produto-stock-2");
     if (stockInfo) {
@@ -194,26 +188,4 @@ export function renderPagamento()
     document.getElementById("pag-data").textContent   = new Date().toLocaleDateString("pt-BR");
     document.getElementById("pag-dest").textContent   = state.orderData.nome     || "--";
     document.getElementById("pag-local").textContent  = state.orderData.endereco || "--";
-}
-
-export function initCatalogoFilters() 
-{
-
-    document.querySelectorAll(".brand-filter").forEach(checkbox =>
-            checkbox.addEventListener("change", renderCatalogo)
-        );
-
-    document.querySelectorAll(".cat-filter").forEach(checkbox =>
-            checkbox.addEventListener("change", renderCatalogo)
-        );
-
-    document.getElementById("price-range")?.addEventListener("input", e => {
-            document.getElementById("price-value").textContent =
-                `Até ${formatPrice(e.target.value)}`;
-
-            renderCatalogo();
-        });
-
-    document.getElementById("sort-select")
-        ?.addEventListener("change", renderCatalogo);
 }

@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS MundoInfo
+CREATE DATABASE IF NOT EXISTS mundoinfo
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-USE MundoInfo;
+USE mundoinfo;
 
 CREATE TABLE product (
     id_product     INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,4 +58,10 @@ CREATE TABLE order_items (
         REFERENCES orders (id_order),
     FOREIGN KEY (id_product)
         REFERENCES product (id_product)
+);
+
+CREATE TABLE admin (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
 );

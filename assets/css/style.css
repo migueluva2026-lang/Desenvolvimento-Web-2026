@@ -66,11 +66,13 @@ header {
 .menu-element {
     color: #c8c8c8;
     text-decoration: none;
-    font-size: 0.7rem;
+    font-size: 0.87rem;
+    font-weight: 600;
     letter-spacing: 0.8px;
 }
 
-#user-menu-container{
+#user-menu-container {
+    margin-right: 2.5vh;
     position:relative;
 }
 
@@ -80,7 +82,7 @@ header {
     border-radius:50%;
     border:none;
     cursor:pointer;
-    background:#1f2937;
+    background:#1b1b1b;
     color:white;
     font-size:18px;
 }
@@ -167,7 +169,6 @@ section {
 
 .promo-title {
     width: 100%;
-    max-width: 90%;
 
     font-size: clamp(2rem, 4vw, 3rem);
     color: white;
@@ -182,7 +183,9 @@ section {
     flex-wrap: wrap;
 }
 
-.card-produto {
+.card-featured {
+    display: flex;
+    flex-direction: column;
     background: white;
     gap: 1.25rem;
 
@@ -192,28 +195,31 @@ section {
     cursor: pointer;
 }
 
-.card-produto img {
+.card-featured img {
+    display: flex;
+    align-self: center;
     width: 220px;
     height: 220px;
     object-fit: contain;
-    background: #fafafa;
-    border-radius: 12px;
     flex-shrink: 0;
 }
 
 .feat-info h4 {
-    font-size: 0.72rem;
-    color: #555;
+    font-size: 1rem;
+    max-width: 30vw;
     line-height: 1.45;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 
 .preco-original {
+    color: gray;
+    font-size: 1rem;
     text-decoration: line-through;
 }
 
 .preco-promocao {
-    color: #5533CC;
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
@@ -311,23 +317,18 @@ section {
     cursor: pointer;
 }
 
-.grid-btn {
-    background-color: gray;
-    color: white;
-    border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 0.72rem;
-    cursor: pointer;
-}
 
 #catalogo-grid {
     display: grid;
     padding: 15px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 16px;
 }
 
 .cat-card {
+    display: flex;
+    flex-direction: column;
+
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -336,18 +337,20 @@ section {
 }
 
 .cat-card img {
-    width: 100%;
+    display: flex;
+    align-self: center;
+    width: 60%;
     height: 145px;
     object-fit: contain;
-    background-color: #f7f7f7;
     padding: 10px;
 }
 
-.cat-card-info { padding: 10px 12px; }
+.cat-card-info { 
+    padding: 10px 12px;
+ }
 
 .cat-card-info h3 {
     font-size: 0.8rem;
-    color: #1a1a2e;
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
@@ -356,7 +359,6 @@ section {
 
 .cat-card-price {
     font-size: 0.88rem;
-    color: #5533CC;
 }
 
 .cat-card-oos {
@@ -515,9 +517,15 @@ section {
 /* PRODUTO */
 
 #produto {
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
     background-color: #f2f2f2;
+}
+
+#produto-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
     padding: 70px 40px 40px;
 }
 
@@ -529,7 +537,7 @@ section {
 
 #produto-main-img {
     width: 100%;
-    height: 290px;
+    height: 40vh;
     object-fit: contain;
     background-color: #e4e4e4;
     border-radius: 10px;
@@ -544,8 +552,8 @@ section {
 }
 
 #produto-thumbs img {
-    width: 90px;
-    height: 60px;
+    width: 100px;
+    height: 80px;
     object-fit: cover;
     border-radius: 5px;
     cursor: pointer;
@@ -637,7 +645,6 @@ section {
 }
 
 .garantias p { margin-bottom: 6px; }
-.garantias a { color: #1d6cf0; }
 .garantias small { color: #888; }
 
 #total-est-box {
@@ -654,8 +661,7 @@ section {
 }
 
 .sale-big {
-    font-size: 1.3rem;
-    color: #5533CC;
+    font-size: 1.5rem;
 }
 
 .orig-small {
@@ -671,7 +677,9 @@ section {
     margin: 8px 0;
 }
 
-.stock-info { font-size: 0.78rem; color: #15803d;}
+.stock-info { 
+    font-size: 0.78rem; 
+    color: #15803d;}
 
 #cart-box {
     background-color: #e5e0ff;
@@ -717,6 +725,28 @@ section {
     padding: 20px 0;
 }
 
+#product-rec-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15vh;
+    width: 100%;
+    background-color: #814848;
+}
+
+#product-rec-bar h3 {
+    font-size: 1.2rem;
+    color: white;
+    padding: 12px 20px;
+}
+
+#recomended-products {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    padding: 0 20px 20px;
+    background-color: #814848;
+}
 /* Botões em comum entre páginas */
 
 .btn-blue {
@@ -1040,7 +1070,7 @@ section {
     margin-top: 16px;
 }
 
-/* ADMIN PANEL STYLES */
+/* ADMIN */
 
 #admin-produtos,
 #admin-produto-update {
@@ -1068,7 +1098,7 @@ section {
     letter-spacing: 1px;
 }
 
-.btn-novo {
+.btn-novoprod {
     padding: 10px 20px;
     background-color: #2A196B;
     color: white;
@@ -1080,7 +1110,7 @@ section {
     transition: background-color 0.2s;
 }
 
-.btn-novo:hover {
+.btn-novoprod:hover {
     background-color: #1f1450;
 }
 

@@ -1,6 +1,9 @@
 -- Seed inicial
 
-USE MundoInfo;
+USE mundoinfo;
+
+INSERT INTO admin ( username, password_hash)
+VALUES ('admin', '$2y$10$qUaSybPAa91u7ypkXquOEe50UEzM4Bbc2j.oRvVQtAQ.1n.XQfVUi');
 
 INSERT INTO product (sku, name, brand, category, stock_quantity, price, original_price, featured, image_card, description, active)
 VALUES

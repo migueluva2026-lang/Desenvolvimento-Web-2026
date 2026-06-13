@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'MundoInfo';
+$dbname = 'mundoinfo';
 $username = 'root';
 $password = '';
 

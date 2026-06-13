@@ -3,7 +3,7 @@ Projeto desenvolvido para a disciplina Desenvolvimento Web em 2026.
 **Data de Início:** 14/03/2026
 Inclui escolher tema, metodo de site (Hash route SPA), seções, interface (figma) etc
 **Data da continuação** 10/06/2026
-Criar um Db usando sql, conectar ao MySQL através do PDO em PHP
+Criar um Db usando sql, conectar ao MySQL através do PDO em PHP e fazer um CRUD
 
 # Stack
 
@@ -27,4 +27,4 @@ Nossa missão é proporcionar atendimento de qualidade, produtos confiáveis e s
 
 ## LIVE
 
-Live on: [...]
+Live on: [\[Infinity Free!\]](https://miuva.infinityfreeapp.com/)

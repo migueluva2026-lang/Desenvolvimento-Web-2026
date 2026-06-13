@@ -1,42 +1,10 @@
-Empresa de venda de computadores e manutenção
+Minimundo – Mundo Informática
 
-Nome da empresa: Mundo Informática
-
-Objetivo da Empresa:
-
-Venda de peças e periféricos de computador.
-
-Objetivo Do site:
-
-O site da empresa tem como objetivo apresentar informações sobre a empresa, vender seus produtos de forma remota e disponibilizar um canal de comunicação direto com os clientes.
-
-Estrutura do Site:
-
-Todas as páginas possuem um menu de navegação no topo
-O site possui 6 possíveis interfaces
-
-1- Homepage
-2- Catálogo
-3- Sobre nós
-4- Contatos
-5- Pedido
-6- Pagamento
-
-Detalhamento Das páginas:
-
-Homepage: Pagina inicial com uma barra de Featured
-
-Catálogo: Catálogo com carrinho e filtros
-
-Sobre nós: Explica quem somos, nossos objetivos e mais
-
-Contatos: Possui nossos contatos principais:
-Whatsapp
-Email
-Endereço
-Celular
-E mostra a localização da loja
-
-Pedido: Tela para inserção de informações para a compra
-
-Pagamento: Mostra os detalhes da compra e informações para o pagamento
+A Mundo Informática é uma empresa especializada na venda de computadores, peças, acessórios e periféricos de informática, além de prestar serviços de manutenção e assistência técnica.
+O sistema tem como objetivo gerenciar os produtos comercializados pela empresa, os clientes cadastrados e os pedidos realizados através do site.
+Os clientes podem criar uma conta no sistema, consultar o catálogo de produtos, adicionar itens ao carrinho e realizar compras online. Para efetuar uma compra, o cliente deve fornecer seus dados pessoais e informações de entrega.
+Cada produto possui um código identificador, nome, descrição, categoria, preço, quantidade em estoque e imagem ilustrativa. Os produtos são cadastrados e gerenciados por administradores do sistema.
+Quando um cliente realiza uma compra, é criado um pedido contendo a data da compra, o valor total, a situação do pedido e os produtos adquiridos. Um pedido pode conter um ou mais produtos, e um produto pode estar presente em vários pedidos.
+Após a confirmação do pedido, o sistema registra as informações de pagamento, incluindo método de pagamento, valor pago, data da transação e status do pagamento.
+A empresa também disponibiliza informações institucionais e canais de contato, como telefone, WhatsApp, e-mail e endereço físico da loja.
+Os administradores possuem acesso restrito ao sistema para cadastrar, atualizar, consultar e remover produtos do catálogo.

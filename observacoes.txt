@@ -21,47 +21,23 @@ O banco de dados tem sua própria pasta
 Foi feita uma transição do productsData.JS para o db, para isso eu fiz um seed com produtos iniciais
 Futuramente, seria bom fazer um cliente padrão para realmente verificar a questão do admin
 
+5- Xampp vs ambiente
 
-Backend:
-
-Entidades
-
-1- Client
-
-id_client (PK)
-name
-email
-number
-address
+Decidi abandonar o five server e passar para o xampp tanto pro front quando pro back em prod
+isso acontece porque já estava chegando no limite do suporte de php do fiveserver, onde a validação já foi um empecilho.
+Como consequencia, como quis por uma subfolder no xamp, mudei o fetch do db para
 
 
-2- Product
 
-id_product (PK)
-sku                       Sku = código bonitinho que um produto tem perto do código de barras
-name
-brand
-description
-price
-original_price
-category
-stock
-image_card        
-featured         <-- se está como destaque na page inial
+Backend
 
-3- Product Images
-id_image
-id_product
-image_path
-sort_order
+É dividido no  
+/api/
+/database/
 
+Para funcionar localmente, precisa por todos os arquivos em uma subfolder chamada DesenWeb2026 dentro do xampp/htdocs
 
-4- Order (Pedido)
-id_order (PK)
-date_order
-amount
-status
-location
-id_client (Foreign Key, vem de Client)
+vars do projeto: index.html linhas 9 e 10 
+                 app.js linha 50 e 91
+                 
 
-4- Order-product 
