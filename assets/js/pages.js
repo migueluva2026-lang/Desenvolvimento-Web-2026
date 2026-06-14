@@ -155,6 +155,20 @@ export function renderProduct(id)
     renderCarrinho();
 }
 
+export async function buscarCEP(cep)
+{
+    if (cep.length !== 8) return null;
+    
+    try {
+        const res = await fetch(`https://viacep.com.br/ws/${cep.replace(/\D/g, '')}/json/`);
+        const data = await res.json();
+        if (data.erro) return null;
+        return data;
+    } catch(e) {
+
+    }
+}
+
 export function renderItensCompra() 
 {
     const lista = document.getElementById("pedido-items-resume");

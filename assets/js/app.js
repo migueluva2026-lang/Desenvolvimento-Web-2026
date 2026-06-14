@@ -1,7 +1,7 @@
 import { state } from './state.js';
-import { removerDoCarrinho, renderCarrinho } from './cart.js';
+import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento } from './pages.js';
+import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
 
 const pages = document.querySelectorAll("main > section");
@@ -116,6 +116,17 @@ function createListeners()
         window.location.hash = "#pagamento";
     });
 
+    document.getElementById("input-cep")?.addEventListener("blur", async e => {
+        const data = await buscarCEP(e.target.value);
+        if (!data) return;
+
+        document.getElementById("input-rua").value = data.logradouro || "";
+        document.getElementById("input-cidade").value = data.localidade || "";
+        document.getElementById("input-uf").value = data.uf || "";
+        document.getElementById("input-bairro").value = data.bairro || "";
+        document.getElementById("input-complemento").value = data.complemento || "";
+    });
+
     document.getElementById("pagamento-form")?.addEventListener("submit", e => {
         e.preventDefault();
         state.carrinho = [];
@@ -124,7 +135,7 @@ function createListeners()
     });
 
     document.getElementById("login-option")?.addEventListener("click",  () => { window.location.hash = "#login"; });
-    document.getElementById("signup-option")?.addEventListener("click", () => { window.location.hash = "#login"; });
+    document.getElementById("signup-option")?.addEventListener("click", () => { window.location.hash = "#sign-up"; });
 
     document.getElementById("login-form")?.addEventListener("submit", e => {
         e.preventDefault();

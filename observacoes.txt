@@ -27,17 +27,19 @@ Decidi abandonar o five server e passar para o xampp tanto pro front quando pro 
 isso acontece porque já estava chegando no limite do suporte de php do fiveserver, onde a validação já foi um empecilho.
 Como consequencia, como quis por uma subfolder no xamp, mudei o fetch do db para
 
-
-
 Backend
 
-É dividido no  
-/api/
-/database/
+É dividido nas pastas
 
-Para funcionar localmente, precisa por todos os arquivos em uma subfolder chamada DesenWeb2026 dentro do xampp/htdocs
+/api/      <- para os arquivos php que fazem o crud
+/database/ <- para o banco de dados (schema e seed)
+
+db.php faz a conexão, todos os outros php usam ele para conectar com o db
+o backend aqui funciona como uma API, logo é um require_once que serve como listener
+
+Para funcionar localmente, precisa por todos os arquivos em uma subfolder chamada DesenWeb2026 dentro do C:/xampp/htdocs
 
 vars do projeto: index.html linhas 9 e 10 
-                 app.js linha 50 e 91
+                app.js linha 50 e 91
                  
 
