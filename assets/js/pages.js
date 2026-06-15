@@ -46,23 +46,23 @@ export function renderCatalogo() {
     ].map(checkbox => checkbox.value);
 
     // Preço máximo
-    const maxPrice = Number(document.getElementById("price-range")?.value || 10000);
+    const maxPrice = Number(document.getElementById("price-range")?.value || 5000);
 
-    // Filtro de marcas
+    // Aplica filtro de marcas
     if (selectedBrands.length > 0) {
         products = products.filter(product =>
             selectedBrands.includes(product.brand)
         );
     }
 
-    // Filtro de categorias
+    // Aplica filtro de categorias
     if (selectedCategories.length > 0) {
         products = products.filter(product =>
             selectedCategories.includes(product.category)
         );
     }
 
-    // Filtro de preço
+    // Aplica filtro de preço
     products = products.filter(product => Number(product.price) <= maxPrice);
 
     // Ordenação
@@ -118,7 +118,7 @@ export function renderProduct(id)
     // == intencional: id da URL é string, id_product do banco é número
     const produto = state.productsData.find(x => x.id_product == id);
     if (!produto) return;
-    state.currentProduct = produto;
+    state.currentProduct = produto; // Importante para o renderRecommendedProducts
 
     const mainImg = document.getElementById("produto-main-img");
     const primeiraImagem = produto.images?.[0]?.image_path ?? produto.image_card;
@@ -155,10 +155,46 @@ export function renderProduct(id)
     renderCarrinho();
 }
 
+export function renderRecommendedProducts() {
+    const currentProduct = state.currentProduct;
+    if (!currentProduct) return;
+
+    const grid = document.getElementById("recommended-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    const products = state.productsData.filter(p =>
+        p.category === currentProduct.category &&
+        p.id_product !== currentProduct.id_product
+    );
+
+    if (!products.length) {
+        grid.innerHTML = '<p class="cat-card-oos">Nenhum produto relacionado encontrado.</p>';
+        return;
+    }
+
+    products.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "cat-card";
+        card.innerHTML = `
+            <img src="${product.image_card}" alt="${product.name}">
+            <div class="cat-card-info">
+                <h3>${product.name}</h3>
+                <p class="cat-card-price">${formatPrice(product.price)}</p>
+                ${Number(product.stock_quantity) === 0 ? '<p class="cat-card-oos">Fora de estoque</p>' : ''}
+            </div>
+        `;
+        card.addEventListener("click", () => {
+            window.location.hash = `#produto?id=${product.id_product}`;
+        });
+        grid.appendChild(card);
+    });
+}
+
 export async function buscarCEP(cep)
 {
     if (cep.length !== 8) return null;
-    
+
     try {
         const res = await fetch(`https://viacep.com.br/ws/${cep.replace(/\D/g, '')}/json/`);
         const data = await res.json();

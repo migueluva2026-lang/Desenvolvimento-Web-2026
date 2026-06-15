@@ -102,6 +102,7 @@
                 </div>
             </div>
         </section>
+
         <!-- LOGIN -->
         <section id="login" class="page-hidden">
             <div class="login-container">
@@ -147,8 +148,8 @@
             <aside id="filter-sidebar">
                 <div class="filter-group">
                     <h3>Preço</h3>
-                    <input type="range" id="price-range" min="0" max="10000" value="10000" step="100">
-                    <span id="price-value">Até R$ 10.000</span>
+                    <input type="range" id="price-range" min="100" max="5000" value="5000" step="100">
+                    <span id="price-value">Até R$ 5000,00</span>
                 </div>
                 <div class="filter-group">
                     <h3>Marcas</h3>
@@ -285,9 +286,9 @@
                 </div>
             </div>
 
-            <div id="product-rec-bar">
+            <div id="recomended-products">
                 <h3>Produtos Recomendados</h3>
-                <div id="recomended-products" class="recomended-grid"></div>
+                <div id="recommended-grid" class="recommended-grid"></div>
             </div>
         </section>
 
@@ -439,13 +440,33 @@
                                 </div>
                             </div>
                             <div class="fg">
-                                <label>PARCELAMENTO</label>
+                                <label class="titulo-campo">PARCELAMENTO</label>
+
                                 <div id="parcelas-list">
-                                    <label><input type="radio" name="parcelas" value="avista" checked> A VISTA</label>
-                                    <label><input type="radio" name="parcelas" value="1x"> 1X SEM JUROS</label>
-                                    <label><input type="radio" name="parcelas" value="2x"> 2X SEM JUROS</label>
-                                    <label><input type="radio" name="parcelas" value="3x"> 3X SEM JUROS</label>
-                                    <label><input type="radio" name="parcelas" value="4x"> 4X SEM JUROS</label>
+                                    <label class="parcela-opcao">
+                                        <input type="radio" name="parcelas" value="avista" checked>
+                                        <span>À VISTA</span>
+                                    </label>
+
+                                    <label class="parcela-opcao">
+                                        <input type="radio" name="parcelas" value="1x">
+                                        <span>1X SEM JUROS</span>
+                                    </label>
+
+                                    <label class="parcela-opcao">
+                                        <input type="radio" name="parcelas" value="2x">
+                                        <span>2X SEM JUROS</span>
+                                    </label>
+
+                                    <label class="parcela-opcao">
+                                        <input type="radio" name="parcelas" value="3x">
+                                        <span>3X SEM JUROS</span>
+                                    </label>
+
+                                    <label class="parcela-opcao">
+                                        <input type="radio" name="parcelas" value="4x">
+                                        <span>4X SEM JUROS</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>

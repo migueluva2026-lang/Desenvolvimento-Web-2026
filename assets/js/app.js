@@ -1,7 +1,7 @@
 import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP } from './pages.js';
+import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
 
 const pages = document.querySelectorAll("main > section");
@@ -34,6 +34,7 @@ function changePage() {
     const renders = {
         "#homepage":             renderHomepage,
         "#catalogo":             renderCatalogo,
+        "#produto":              renderRecommendedProducts,
         "#pedido":               renderItensCompra,
         "#pagamento":            renderPagamento,
         "#admin-produtos":       renderAdminProdutos,
@@ -68,6 +69,8 @@ export async function handleLogin( username, password)
 
         state.isAdmin = true;
 
+        document.getElementById("signup-option").style.display = "none";
+        document.getElementById("login-option").style.display = "none";
         document.getElementById("admin-nav-btn").style.display = "inline-block";
         document.getElementById("logout-option").style.display = "inline-block";
         window.location.hash = "#admin-produtos";
@@ -77,8 +80,11 @@ export async function handleLogin( username, password)
     }
 }
 
-function handleLogout() {
+function handleLogout() 
+{
     state.isAdmin = false;
+    document.getElementById("signup-option").style.display = "inline-block";
+    document.getElementById("login-option").style.display = "inline-block";
     document.getElementById("admin-nav-btn").style.display = "none";
     document.getElementById("logout-option").style.display = "none";
     window.location.hash = "#homepage";
