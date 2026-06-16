@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mundo Informática</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/DesenWeb2026/assets/css/style.css">
     <script type="module" src="/DesenWeb2026/assets/js/app.js"defer></script>
@@ -18,11 +19,12 @@
         </a>
         <div id="search-bar">
             <input type="text" id="search-input" placeholder="O que você procura?">
+            <div id="search-dropdown" class="search-dropdown"></div>
         </div>
         <nav id="nav-bar">
-            <a href="#catalogo" class="menu-element">CATÁLOGO</a>
-            <a href="#contatos" class="menu-element">CONTATOS</a>
-            <a href="#sobre-nos" class="menu-element">SOBRE NÓS</a>
+            <a href="#catalogo" class="menu-element">Catálogo</a>
+            <a href="#contatos" class="menu-element">Contatos</a>
+            <a href="#sobre-nos" class="menu-element">Sobre Nós</a>
             <a href="#admin-produtos" class="menu-element admin-btn" id="admin-nav-btn" style="display:none; color:#d4a574;">ADMIN PANEL</a>
             <div id="user-menu-container">
                 <button id="user-menu-btn"> 👤 </button>
@@ -47,50 +49,27 @@
                     <form id="signup-form" novalidate>
                         <div class="fg">
                             <label for="signup-name">Nome</label>
-                            <input
-                                type="text"
-                                id="signup-name"
-                                placeholder="Digite seu nome completo"
-                                required
-                            >
+                            <input type="text" id="signup-name" placeholder="Digite seu nome completo" required>
                         </div>
 
                         <div class="fg">
                             <label for="signup-email">Email</label>
-                            <input
-                                type="email"
-                                id="signup-email"
-                                placeholder="Digite seu email"
-                                required
-                            >
+                            <input type="email" id="signup-email" placeholder="Digite seu email" required>
                         </div>
 
                         <div class="fg">
                             <label for="signup-phone">Telefone</label>
-                            <input
-                                type="tel"
-                                id="signup-phone"
-                                placeholder="(11) 99999-9999"
-                            >
+                            <input type="tel" id="signup-phone" placeholder="(11) 99999-9999">
                         </div>
 
                         <div class="fg">
                             <label for="signup-address">Endereço</label>
-                            <input
-                                type="text"
-                                id="signup-address"
-                                placeholder="Rua, número, bairro"
-                            >
+                            <input type="text" id="signup-address" placeholder="Rua, número, bairro"> 
                         </div>
 
                         <div class="fg">
                             <label for="signup-password">Senha</label>
-                            <input
-                                type="password"
-                                id="signup-password"
-                                placeholder="Crie uma senha"
-                                required
-                            >
+                            <input type="password" id="signup-password" placeholder="Crie uma senha" required>
                         </div>
 
                         <button type="submit" class="btn-login"> Cadastrar </button>
@@ -126,12 +105,10 @@
 
         <!-- HOMEPAGE -->
         <section id="homepage" class="page-active">
-            <div class="barra-inicial">
+            <div class="hero-bar">
                 <h2 class="promo-title">Promoções em Destaque</h2>
                 <div id="featured-products" class="featured-grid"></div>
             </div>
-
-            <div id="separator" style="width: max-content; height: 1px; background-color: #ccc; margin: 20px auto;"></div>
             
             <div class="second-bar">
                 <div class="second-bar-info">
@@ -264,7 +241,7 @@
                     <div class="frete-box">
                         <p class="frete-label">Consulte o Frete</p>
                         <div class="frete-row">
-                            <input type="text" id="cep-frete" maxlength="9">
+                            <input type="text" id="cep-frete" maxlength="9" placeholder="CEP">
                             <button id="calc-frete-btn" class="btn-sm">Calcular</button>
                         </div>
                         <span id="frete-result"></span>
@@ -305,20 +282,20 @@
                                 <h3 class="card-title">Dados Pessoais</h3>
                                 <div class="fg">
                                     <label>Nome Completo *</label>
-                                    <input type="text">
+                                    <input id="input-nome" type="text">
                                 </div>
                                 <div class="fg">
                                     <label>CPF *</label>
-                                    <input type="text" maxlength="14">
+                                    <input id="input-cpf" type="text" maxlength="14">
                                 </div>
                                 <div class="duplabar">
                                     <div class="fg">
                                         <label>Email *</label>
-                                        <input type="email">
+                                        <input id="input-email" type="email">
                                     </div>
                                     <div class="fg">
                                         <label>Telefone *</label>
-                                        <input type="text" maxlength="15">
+                                        <input id="input-tel" type="text" maxlength="15">
                                     </div>
                                 </div>
                             </div>
@@ -343,7 +320,7 @@
                                 <div class="duplabar">
                                     <div class="fg" style="max-width:120px;">
                                         <label>Número *</label>
-                                        <input type="text">
+                                        <input id="input-numero" type="text">
                                     </div>
                                     <div class="fg">
                                         <label>Complemento</label>

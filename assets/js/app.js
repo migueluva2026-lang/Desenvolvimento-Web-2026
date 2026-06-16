@@ -1,10 +1,13 @@
 import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
+import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
+import { validarPedido } from "./validation.js";
 
 const pages = document.querySelectorAll("main > section");
+const searchInput = document.getElementById("search-input");
+const searchDropdown = document.getElementById("search-dropdown");
 
 // ---- ROTEADOR ----------------------------------------------------------------
 
@@ -102,44 +105,6 @@ async function loadProducts()
 
 function createListeners() 
 {
-    document.getElementById("add-cart-btn")?.addEventListener("click", () => {
-        if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
-    });
-
-    document.getElementById("comprar-agora-btn")?.addEventListener("click", () => {
-        if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
-        window.location.hash = "#pedido";
-    });
-
-    document.getElementById("ir-pedido-btn")?.addEventListener("click", () => {
-        window.location.hash = "#pedido";
-    });
-
-    document.getElementById("pedido-form")?.addEventListener("submit", e => {
-        e.preventDefault();
-        state.orderData.nome     = e.target.querySelector("input[name=nome]")?.value     ?? "";
-        state.orderData.endereco = e.target.querySelector("input[name=endereco]")?.value ?? "";
-        window.location.hash = "#pagamento";
-    });
-
-    document.getElementById("input-cep")?.addEventListener("blur", async e => {
-        const data = await buscarCEP(e.target.value);
-        if (!data) return;
-
-        document.getElementById("input-rua").value = data.logradouro || "";
-        document.getElementById("input-cidade").value = data.localidade || "";
-        document.getElementById("input-uf").value = data.uf || "";
-        document.getElementById("input-bairro").value = data.bairro || "";
-        document.getElementById("input-complemento").value = data.complemento || "";
-    });
-
-    document.getElementById("pagamento-form")?.addEventListener("submit", e => {
-        e.preventDefault();
-        state.carrinho = [];
-        renderCarrinho();
-        window.location.hash = "#homepage";
-    });
-
     document.getElementById("login-option")?.addEventListener("click",  () => { window.location.hash = "#login"; });
     document.getElementById("signup-option")?.addEventListener("click", () => { window.location.hash = "#sign-up"; });
 
@@ -154,6 +119,85 @@ function createListeners()
     document.getElementById("logout-option")?.addEventListener("click", e => {
         e.preventDefault();
         handleLogout();
+    });
+
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        if (!query) {
+            searchDropdown.classList.remove("show");
+            return;
+        }
+
+        const matches = state.productsData.filter(product => product.name?.toLowerCase().includes(query)).slice(0, 8);
+
+        renderSearchDropdown(matches);
+    });
+
+    searchDropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".search-item");
+
+        if (!item?.dataset.id) return;
+
+        const productId = item.dataset.id;
+
+        window.location.hash = `#produto?id=${productId}`;
+
+        searchInput.value = "";
+        searchDropdown.classList.remove("show");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (
+            !searchInput.contains(e.target) &&
+            !searchDropdown.contains(e.target)
+        ) {
+            searchDropdown.classList.remove("show");
+        }
+    });
+
+    document.getElementById("add-cart-btn")?.addEventListener("click", () => {
+        if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
+    });
+
+    document.getElementById("comprar-agora-btn")?.addEventListener("click", () => {
+        if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
+        window.location.hash = "#pedido";
+    });
+
+    document.getElementById("ir-pedido-btn")?.addEventListener("click", () => {
+        window.location.hash = "#pedido";
+    });
+
+    document.getElementById("input-cep")?.addEventListener("blur", async e => {
+        const data = await buscarCEP(e.target.value);
+        if (!data) return;
+
+        document.getElementById("input-rua").value = data.logradouro || "";
+        document.getElementById("input-cidade").value = data.localidade || "";
+        document.getElementById("input-uf").value = data.uf || "";
+        document.getElementById("input-bairro").value = data.bairro || "";
+        document.getElementById("input-complemento").value = data.complemento || "";
+    });
+
+    document.getElementById("pedido-form")?.addEventListener("submit", e => {
+        e.preventDefault();
+        const erros = validarPedido(e.target);
+
+        if (erros.length) {
+            alert(erros.join("\n"));
+            return;
+        }
+        state.orderData.nome     = e.target.querySelector("input[name=nome]")?.value     ?? "";
+        state.orderData.endereco = e.target.querySelector("input[name=endereco]")?.value ?? "";
+        window.location.hash = "#pagamento";
+    });
+
+    document.getElementById("pagamento-form")?.addEventListener("submit", e => {
+        e.preventDefault();
+        state.carrinho = [];
+        renderCarrinho();
+        window.location.hash = "#homepage";
     });
 
     document.getElementById("btn-novo-prod")?.addEventListener("click", () => {

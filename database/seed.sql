@@ -88,6 +88,86 @@ VALUES
  'Fonte ASUS ROG Thor 850W Platinum Modulada, Display OLED Power, Aura Sync RGB, certificação 80 Plus Platinum',
  1);
 
+ ('Produto-011',
+ 'Mouse Gamer Placeholder Pro RGB',
+ 'Placeholder', 'Periféricos', 25,
+ 149.99, 199.99, 0,
+ 'assets/img/headset/headset-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-012',
+ 'Teclado Mecânico Placeholder TKL',
+ 'Placeholder', 'Periféricos', 18,
+ 259.99, 329.99, 0,
+ 'assets/img/teclado/teclado-card.jpg',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-013',
+ 'SSD Placeholder NVMe 2TB',
+ 'Placeholder', 'SSD', 30,
+ 499.99, 649.99, 0,
+ 'assets/img/ssd/ssd-card.jpg',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-014',
+ 'Monitor Placeholder UltraWide 34"',
+ 'Placeholder', 'Monitor', 9,
+ 1599.99, 1999.99, 1,
+ 'assets/img/monitor/monitor-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-015',
+ 'Placa de Vídeo Placeholder RTX',
+ 'Placeholder', 'Placa de Vídeo', 6,
+ 2999.99, 3699.99, 1,
+ 'assets/img/gpu/gpu-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-016',
+ 'Fonte Placeholder 750W Gold',
+ 'Placeholder', 'Periféricos', 14,
+ 549.99, 699.99, 0,
+ 'assets/img/fonte/fonte-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-017',
+ 'Gabinete Placeholder RGB Mid Tower',
+ 'Placeholder', 'Gabinete', 11,
+ 429.99, 549.99, 0,
+ 'assets/img/gabinete/gabinete-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-018',
+ 'Memória RAM Placeholder 32GB DDR5',
+ 'Placeholder', 'Memória Ram', 20,
+ 389.99, 479.99, 0,
+ 'assets/img/ram/ram-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-019',
+ 'Notebook Placeholder Gamer',
+ 'Placeholder', 'Periféricos', 5,
+ 4299.99, 4999.99, 1,
+ 'assets/img/notebook/notebook-card.webp',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1),
+
+('Produto-020',
+ 'Monitor Placeholder 27" QHD',
+ 'Placeholder', 'Monitor', 12,
+ 1199.99, 1499.99, 0,
+ 'assets/img/monitorsamsung/monitorsamsung-card.avif',
+ 'Produto placeholder para testes de catálogo, filtros e estoque.',
+ 1);
+
 INSERT INTO product_images (id_product, image_path, sort_order) VALUES
 ((SELECT id_product FROM product WHERE sku = 'Produto-001'), 'assets/img/monitor/monitor-1.webp', 1),
 ((SELECT id_product FROM product WHERE sku = 'Produto-001'), 'assets/img/monitor/monitor-2.webp', 2),
@@ -147,3 +227,67 @@ INSERT INTO product_images (id_product, image_path, sort_order) VALUES
 ((SELECT id_product FROM product WHERE sku = 'Produto-010'), 'assets/img/fonte/fonte-card.webp', 2),
 ((SELECT id_product FROM product WHERE sku = 'Produto-010'), 'assets/img/fonte/fonte-card.webp', 3),
 ((SELECT id_product FROM product WHERE sku = 'Produto-010'), 'assets/img/fonte/fonte-card.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-011'), 'assets/img/headset/headset-1.webp', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-011'), 'assets/img/headset/headset-2.webp', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-011'), 'assets/img/headset/headset-3.webp', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-011'), 'assets/img/headset/headset-4.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-012'), 'assets/img/teclado/teclado-1.jpg', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-012'), 'assets/img/teclado/teclado-2.jpg', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-012'), 'assets/img/teclado/teclado-3.jpg', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-012'), 'assets/img/teclado/teclado-4.jpg', 4);
+
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-013'), 'assets/img/headset/headset-1.webp', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-013'), 'assets/img/headset/headset-2.webp', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-013'), 'assets/img/headset/headset-3.webp', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-013'), 'assets/img/headset/headset-4.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-014'), 'assets/img/teclado/teclado-1.jpg', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-014'), 'assets/img/teclado/teclado-2.jpg', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-014'), 'assets/img/teclado/teclado-3.jpg', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-014'), 'assets/img/teclado/teclado-4.jpg', 4);
+
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-015'), 'assets/img/headset/headset-1.webp', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-015'), 'assets/img/headset/headset-2.webp', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-015'), 'assets/img/headset/headset-3.webp', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-015'), 'assets/img/headset/headset-4.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-016'), 'assets/img/teclado/teclado-1.jpg', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-016'), 'assets/img/teclado/teclado-2.jpg', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-016'), 'assets/img/teclado/teclado-3.jpg', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-016'), 'assets/img/teclado/teclado-4.jpg', 4);
+
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-017'), 'assets/img/headset/headset-1.webp', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-017'), 'assets/img/headset/headset-2.webp', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-017'), 'assets/img/headset/headset-3.webp', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-017'), 'assets/img/headset/headset-4.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-018'), 'assets/img/teclado/teclado-1.jpg', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-018'), 'assets/img/teclado/teclado-2.jpg', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-018'), 'assets/img/teclado/teclado-3.jpg', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-018'), 'assets/img/teclado/teclado-4.jpg', 4);
+
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-019'), 'assets/img/headset/headset-1.webp', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-019'), 'assets/img/headset/headset-2.webp', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-019'), 'assets/img/headset/headset-3.webp', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-019'), 'assets/img/headset/headset-4.webp', 4);
+
+INSERT INTO product_images (id_product, image_path, sort_order) VALUES
+((SELECT id_product FROM product WHERE sku = 'Produto-020'), 'assets/img/teclado/teclado-1.jpg', 1),
+((SELECT id_product FROM product WHERE sku = 'Produto-020'), 'assets/img/teclado/teclado-2.jpg', 2),
+((SELECT id_product FROM product WHERE sku = 'Produto-020'), 'assets/img/teclado/teclado-3.jpg', 3),
+((SELECT id_product FROM product WHERE sku = 'Produto-020'), 'assets/img/teclado/teclado-4.jpg', 4);

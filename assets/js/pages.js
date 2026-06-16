@@ -1,20 +1,51 @@
 import { state } from './state.js';
 import { adicionarAoCarrinho, renderCarrinho, totalCarrinho, formatPrice } from './cart.js';
 
-export function renderHomepage() {
+export function renderSearchDropdown(products)
+{
+    const searchDropdown = document.getElementById("search-dropdown");
+
+    if (!products.length) {
+        searchDropdown.innerHTML = `
+            <div class="search-item">
+                Nenhum produto encontrado
+            </div>
+        `;
+        searchDropdown.classList.add("show");
+        return;
+    }
+
+    searchDropdown.innerHTML = products.map(product => `
+        <div class="search-item" data-id="${product.id_product}">
+            <div class="search-item-name">${product.name}</div>
+            <div class="search-item-price">
+                ${formatPrice(product.price)}
+            </div>
+        </div>
+    `).join("");
+
+    searchDropdown.classList.add("show");
+}
+
+export function renderHomepage() 
+{
     const grid = document.getElementById("featured-products");
     if (!grid) return;
     grid.innerHTML = "";
-
+    let featuredNumber = 0;
     state.productsData
         .filter(p => Number(p.featured) === 1) // Filtra apenas pros filtered funcionarem
         .forEach(product => {
+            if (featuredNumber >= 2) return;
+            featuredNumber += 1;
+
+            // Aqui tem a possibilidade de filtrar o featured por nome
             const card = document.createElement("div");
             card.className = "card-featured";
             card.innerHTML = `
                 <img src="${product.image_card}" alt="${product.name}">
                 <div class="feat-info">
-                    <h4>${product.description.substring(0, 100)}…</h4>
+                    <h4>${product.name}</h4>
                     <p class="preco-original">${formatPrice(product.original_price)}</p>
                     <p class="preco-promocao">${formatPrice(product.price)}</p>
                     <button class="btn-ver">Ver Produto</button>
@@ -27,7 +58,8 @@ export function renderHomepage() {
         });
 }
 
-export function renderCatalogo() {
+export function renderCatalogo() 
+{
     const grid = document.getElementById("catalogo-grid");
     if (!grid) return;
 
