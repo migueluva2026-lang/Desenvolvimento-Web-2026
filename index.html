@@ -480,6 +480,109 @@
             </div>
         </section>
 
+        <!-- ADMIN - CRIAR PRODUTO -->
+        <section id="admin-produto-create" class="page-hidden">
+
+            <div class="admin-wrapper">
+
+                <h2 class="admin-title">Novo Produto</h2>
+
+                <form id="admin-produto-create-form" class="admin-form">
+
+                    <div class="form-grid">
+
+                        <div class="fg">
+                            <label for="create-sku">SKU</label>
+                            <input type="text" id="create-sku" required>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-name">Nome</label>
+                            <input type="text" id="create-name" required>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-brand">Marca</label>
+                            <input type="text" id="create-brand" required>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-category">Categoria</label>
+
+                            <select id="create-category" required>
+                                <option value="">Selecione...</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Placa de Vídeo">Placa de Vídeo</option>
+                                <option value="Placa Mãe">Placa Mãe</option>
+                                <option value="Processador">Processador</option>
+                                <option value="Memória Ram">Memória Ram</option>
+                                <option value="Gabinete">Gabinete</option>
+                                <option value="SSD">SSD</option>
+                                <option value="Periféricos">Periféricos</option>
+                                <option value="__new__">+ Nova Categoria</option>
+                            </select>
+                        </div>
+
+                        <div id="new-category-wrapper" class="fg" style="display:none;">
+                            <label for="create-new-category">Nova Categoria</label>
+                            <input type="text" id="create-new-category" placeholder="Digite a nova categoria">
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-price">Preço</label>
+                            <input type="number" id="create-price" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-original-price">Preço Original</label>
+                            <input type="number" id="create-original-price" min="0" step="0.01">
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-stock">Quantidade em Estoque</label>
+                            <input type="number" id="create-stock" min="0" required>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-featured">Destaque</label>
+
+                            <select id="create-featured">
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
+                            </select>
+                        </div>
+
+                        <div class="fg">
+                            <label for="create-active">Ativo</label>
+
+                            <select id="create-active">
+                                <option value="1">Sim</option>
+                                <option value="0">Não</option>
+                            </select>
+                        </div>
+
+                        <div class="fg full-width">
+                            <label for="create-description">Descrição</label>
+                            <textarea id="create-description" rows="6"></textarea>
+                        </div>
+
+                        <div class="fg full-width">
+                            <label for="create-images-upload">Imagens do Produto</label>
+                            <input type="file" id="create-images-upload" accept="image/*" multiple>
+
+                            <small id="images-count-info"> Nenhuma imagem selecionada. </small>
+                        </div>
+
+                    </div>
+
+                    <div class="admin-actions">
+                        <button type="submit" class="btn-save">Criar Produto</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
         <!-- ADMIN - ATUALIZAR PRODUTO -->
         <section id="admin-produto-update" class="page-hidden">
             <div class="admin-wrapper">
@@ -516,90 +619,6 @@
                         <button type="button" id="btn-voltar-admin" class="btn-cancel">Cancelar</button>
                     </div>
                 </form>
-            </div>
-        </section>
-
-        <!-- ADMIN - CRIAR PRODUTO -->
-        <section id="admin-produto-create" class="page-hidden">
-            <div class="admin-wrapper">
-
-                <h2 class="admin-title">Novo Produto</h2>
-
-                <form id="admin-produto-create-form" class="admin-form">
-
-                    <div class="form-grid">
-
-                        <div class="fg">
-                            <label>SKU</label>
-                            <input type="text" id="create-sku" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Nome</label>
-                            <input type="text" id="create-name" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Marca</label>
-                            <input type="text" id="create-brand" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Categoria</label>
-                            <input type="text" id="create-category" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Preço</label>
-                            <input type="number" id="create-price" step="0.01" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Preço Original</label>
-                            <input type="number" id="create-original-price" step="0.01">
-                        </div>
-
-                        <div class="fg">
-                            <label>Quantidade em Estoque</label>
-                            <input type="number" id="create-stock" required>
-                        </div>
-
-                        <div class="fg">
-                            <label>Imagem Card</label>
-                            <input type="text" id="create-image-card">
-                        </div>
-
-                        <div class="fg">
-                            <label>Destaque</label>
-                            <select id="create-featured">
-                                <option value="0">Não</option>
-                                <option value="1">Sim</option>
-                            </select>
-                        </div>
-
-                        <div class="fg">
-                            <label>Ativo</label>
-                            <select id="create-active">
-                                <option value="1">Sim</option>
-                                <option value="0">Não</option>
-                            </select>
-                        </div>
-
-                        <div class="fg full-width">
-                            <label>Descrição</label>
-                            <textarea id="create-description" rows="6"></textarea>
-                        </div>
-
-                    </div>
-
-                    <div class="admin-actions">
-                        <button type="submit" class="btn-save">
-                            Criar Produto
-                        </button>
-                    </div>
-
-                </form>
-
             </div>
         </section>
 

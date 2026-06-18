@@ -2,12 +2,25 @@ import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
 import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
-import { renderAdminProdutos, renderAdminProdutoUpdate } from './admin.js';
+import { renderAdminProdutos, renderAdminProdutoUpdate, generateImagePaths } from './admin.js';
 import { validarPedido } from "./validation.js";
 
 const pages = document.querySelectorAll("main > section");
+
+// Search bar
 const searchInput = document.getElementById("search-input");
 const searchDropdown = document.getElementById("search-dropdown");
+
+// Admin New product
+const createForm = document.getElementById('admin-produto-create-form');
+const categorySelect = document.getElementById('create-category');
+const newCategoryWrapper = document.getElementById('new-category-wrapper');
+const imagesUpload = document.getElementById('create-images-upload');
+const imagesInfo = document.getElementById('images-count-info');
+
+// Admin Update Product
+const form = document.getElementById("admin-produto-update-form");
+
 
 // ---- ROTEADOR ----------------------------------------------------------------
 
@@ -47,6 +60,24 @@ function changePage() {
 }
 
 // ---- AUTH ------------------------------------------------------------------
+export function restoreSession() 
+{
+    const admin = localStorage.getItem("admin");
+
+    if (!admin)
+        return false;
+
+    const data = JSON.parse(admin);
+
+    state.isAdmin = true;
+
+    document.getElementById("signup-option").style.display = "none";
+    document.getElementById("login-option").style.display = "none";
+    document.getElementById("admin-nav-btn").style.display = "inline-block";
+    document.getElementById("logout-option").style.display = "inline-block";
+
+    return true;
+}
 
 export async function handleLogin( username, password) 
 {
@@ -70,6 +101,12 @@ export async function handleLogin( username, password)
             return;
         }
 
+        localStorage.setItem("admin", JSON.stringify({
+            id_admin: result.id_admin,
+            username: result.username
+            })
+        );
+
         state.isAdmin = true;
 
         document.getElementById("signup-option").style.display = "none";
@@ -85,7 +122,9 @@ export async function handleLogin( username, password)
 
 function handleLogout() 
 {
+    localStorage.removeItem("admin");
     state.isAdmin = false;
+
     document.getElementById("signup-option").style.display = "inline-block";
     document.getElementById("login-option").style.display = "inline-block";
     document.getElementById("admin-nav-btn").style.display = "none";
@@ -188,6 +227,7 @@ function createListeners()
             alert(erros.join("\n"));
             return;
         }
+        
         state.orderData.nome     = e.target.querySelector("input[name=nome]")?.value     ?? "";
         state.orderData.endereco = e.target.querySelector("input[name=endereco]")?.value ?? "";
         window.location.hash = "#pagamento";
@@ -209,6 +249,109 @@ function createListeners()
         window.location.hash = "#admin-produtos";
     });
 
+    categorySelect?.addEventListener('change', () => { // caso category select tenha new, mostra (display block), caso não, none
+        newCategoryWrapper.style.display = categorySelect.value === '__new__' ? 'block' : 'none';
+    });
+
+    imagesUpload?.addEventListener('change', () => {
+        const count = imagesUpload.files.length;
+        imagesInfo.textContent = count ? `${count} imagem(ns) selecionada(s).` : 'Nenhuma imagem selecionada.';
+    });
+
+    document.getElementById('admin-produto-create-form')?.addEventListener('submit', async e => {
+        e.preventDefault();
+
+        const { image_card, images } = generateImagePaths();
+
+        const product = {
+            sku: document.getElementById('create-sku').value.trim(),
+            name: document.getElementById('create-name').value.trim(),
+            brand: document.getElementById('create-brand').value.trim(),
+            category: categorySelect.value === '__new__' ? document.getElementById('create-new-category').value.trim() : categorySelect.value,
+            description: document.getElementById('create-description').value.trim(),
+            price: Number(document.getElementById('create-price').value),
+            original_price: Number(document.getElementById('create-original-price').value) || null,
+            stock_quantity: Number(document.getElementById('create-stock').value),
+            featured: Number(document.getElementById('create-featured').value),
+            active: Number(document.getElementById('create-active').value),
+            image_card,
+            images
+        };
+
+        console.log(product);
+
+        try {
+            const response = await fetch("/DesenWeb2026/api/products/create.php",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(product)
+                }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert("Produto criado com sucesso!");
+                createForm.reset();
+            } else {
+                alert("Erro ao criar produto.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Erro na comunicação com o servidor.");
+        }
+    });
+
+    form.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const product = {
+            id_product: state.currentEditingProductId,
+            name: document.getElementById("update-name").value,
+            brand: document.getElementById("update-brand").value,
+            category: document.getElementById("update-category").value,
+            price: Number(document.getElementById("update-price").value),
+            description: document.getElementById("update-desc").value,
+            stock_quantity: Number(document.getElementById("update-stock").value)
+        };
+
+        try {
+            const response = await fetch( "/DesenWeb2026/api/products/update.php",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(product)
+                }
+            );
+            const result = await response.json();
+
+            if (result.success) {
+                alert("Produto atualizado com sucesso!");
+
+                const produtoLocal = state.productsData.find(
+                    p => p.id_product == state.currentEditingProductId
+                );
+
+                if (produtoLocal) {
+                    Object.assign(produtoLocal, product);
+                }
+
+                window.location.hash = "#admin-produtos";
+            } else {
+                alert(result.message || "Erro ao atualizar produto.");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro na comunicação com o servidor.");
+        }
+    });
+
     document.querySelectorAll(".brand-filter").forEach(checkbox =>
         checkbox.addEventListener("change", renderCatalogo)
     );
@@ -228,6 +371,8 @@ function createListeners()
 // ---- INIT ----------------------------------------------------------------
 
 window.addEventListener("load", async () => {
+    restoreSession();
+    
     await loadProducts();
     changePage();
     createListeners();
@@ -237,8 +382,41 @@ window.addEventListener("hashchange", changePage);
 
 // Globais necessários para handlers inline (onclick, por ex)
 window.removerDoCarrinho = removerDoCarrinho;
-window.handleLogout      = handleLogout;
-window.editarProduto     = (id) => {
+window.handleLogout = handleLogout;
+
+window.editarProduto = (id) => {
     state.currentEditingProductId = id;
     window.location.hash = "#admin-produto-update";
+};
+
+window.excluirProduto = async (id) => {
+    if (!confirm("Deseja realmente excluir este produto?")) return;
+
+    try {
+        const response = await fetch("/DesenWeb2026/api/products/delete.php",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id_product: id
+                })
+            }
+        );
+
+        const result = await response.json();
+        if (result.success) {
+            alert("Produto excluído!");
+
+            state.productsData =state.productsData.filter(p => p.id_product != id);
+            renderAdminProdutos();
+        } else {
+            alert(result.message);
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao excluir produto.");
+    }
 };

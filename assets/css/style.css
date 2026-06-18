@@ -1153,8 +1153,7 @@ section {
 
 /* ADMIN */
 
-#admin-produtos,
-#admin-produto-update {
+#admin-produtos, #admin-produto-update {
     flex-direction: column;
     background-color: #f8f8f8;
     padding: 40px 20px;
@@ -1175,7 +1174,6 @@ section {
 
 .admin-title {
     font-size: 1.8rem;
-    color: #2A196B;
     letter-spacing: 1px;
 }
 
@@ -1184,11 +1182,8 @@ section {
     background-color: #2A196B;
     color: white;
     border: none;
-    border-radius: 6px;
     font-size: 0.85rem;
     cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s;
 }
 
 .btn-novoprod:hover {
@@ -1199,7 +1194,6 @@ section {
 
 .admin-table-wrap {
     background-color: white;
-    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -1218,7 +1212,6 @@ section {
     padding: 14px 12px;
     text-align: left;
     font-size: 0.8rem;
-    font-weight: 600;
     letter-spacing: 0.5px;
 }
 
@@ -1226,7 +1219,6 @@ section {
     padding: 12px;
     border-bottom: 1px solid #eee;
     font-size: 0.85rem;
-    color: #333;
 }
 
 .admin-table tbody tr:hover {
@@ -1246,8 +1238,7 @@ section {
     gap: 8px;
 }
 
-.btn-edit,
-.btn-delete {
+.btn-edit, .btn-delete {
     padding: 6px 12px;
     border: none;
     border-radius: 4px;
@@ -1266,8 +1257,7 @@ section {
     color: white;
 }
 
-.btn-edit:hover,
-.btn-delete:hover {
+.btn-edit:hover, .btn-delete:hover {
     opacity: 0.8;
 }
 
@@ -1303,8 +1293,7 @@ section {
     font-weight: 500;
 }
 
-.admin-form .fg input,
-.admin-form .fg textarea {
+.admin-form .fg input, .admin-form .fg textarea {
     padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -1313,8 +1302,7 @@ section {
     transition: border-color 0.2s;
 }
 
-.admin-form .fg input:focus,
-.admin-form .fg textarea:focus {
+.admin-form .fg input:focus, .admin-form .fg textarea:focus {
     outline: none;
     border-color: #2A196B;
 }
@@ -1325,8 +1313,7 @@ section {
     justify-content: flex-end;
 }
 
-.btn-save,
-.btn-cancel {
+.btn-save, .btn-cancel {
     padding: 11px 24px;
     border: none;
     border-radius: 6px;
@@ -1346,7 +1333,6 @@ section {
     color: #333;
 }
 
-.btn-save:hover,
-.btn-cancel:hover {
+.btn-save:hover, .btn-cancel:hover {
     opacity: 0.8;
 }
