@@ -16,7 +16,7 @@ Modularizei o JavaScript para dividir as funções
 Separei uma folder para a API em PhP, os arquivos de estilização e lógica do frontend ficam no assets/
 O banco de dados tem sua própria pasta
 
-4- db
+4- Databasae
 
 Foi feita uma transição do productsData.JS para o db, para isso eu fiz um seed com produtos iniciais
 Futuramente, seria bom fazer um cliente padrão para realmente verificar a questão do admin
@@ -39,7 +39,9 @@ o backend aqui funciona como uma API, logo é um require_once que serve como lis
 
 Para funcionar localmente, precisa por todos os arquivos em uma subfolder chamada DesenWeb2026 dentro do C:/xampp/htdocs
 
-vars do projeto: index.html linhas 9 e 10 
-                app.js linha 50 e 91
+
+
+
+Vars do projeto: index.html linhas 10 e 11 (CSS e JS) e app.js loadProducts e handleLogin FETCHES (DesenWeb2026 Vai e some)
                  
 

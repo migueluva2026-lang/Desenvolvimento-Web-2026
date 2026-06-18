@@ -45,8 +45,8 @@
             <div class="login-container">
                 <div class="login-box">
                     <h2 class="login-title">Criar Conta</h2>
-
-                    <form id="signup-form" novalidate>
+                    <p class="login-subtitle" style="margin-bottom: 10px;">Preencha os dados abaixo para começar. </p>
+                    <form id="signup-form">
                         <div class="fg">
                             <label for="signup-name">Nome</label>
                             <input type="text" id="signup-name" placeholder="Digite seu nome completo" required>
@@ -69,15 +69,15 @@
 
                         <div class="fg">
                             <label for="signup-password">Senha</label>
-                            <input type="password" id="signup-password" placeholder="Crie uma senha" required>
+                            <input type="password" id="signup-password" placeholder="Mínimo de 6 caracteres" required>
                         </div>
 
                         <button type="submit" class="btn-login"> Cadastrar </button>
                     </form>
 
-                    <p class="login-hint">
-                        Já possui uma conta? Faça login.
-                    </p>
+                    <p class="login-hint"> Já possui uma conta? </p>
+
+                    <a href="#" style="display: flex; justify-content: center;"> Faça login</a>
                 </div>
             </div>
         </section>
@@ -105,9 +105,9 @@
 
         <!-- HOMEPAGE -->
         <section id="homepage" class="page-active">
+
             <div class="hero-bar">
-                <h2 class="promo-title">Promoções em Destaque</h2>
-                <div id="featured-products" class="featured-grid"></div>
+                <img src="./assets/img/hero.jpg">
             </div>
             
             <div class="second-bar">
@@ -116,6 +116,142 @@
                     <span>50% OFF Em Monitores ASUS</span>
                     <span>USE: MUNDOINFO50</span>
                     <span>15% OFF NO PIX</span>
+                </div>
+            </div>
+
+            <div id="recommended-bar">
+                <h2 class="promo-title">Promoções do dia</h2>
+                <div id="featured-products" class="featured-grid"></div>
+            </div>
+
+            <div id="pedido-build"> <!-- MONTE SEU PC -->
+                <div class="home-card">
+                    <h2>Monte seu PC</h2>
+                    <p style="margin-bottom: 2vh;"> Escolha os componentes desejados e envie sua configuração. Nossa equipe analisará a compatibilidade e entrará em contato com um orçamento personalizado. </p>
+
+                    <div class="duplabar">
+                        <div class="fg">
+                            <label>Processador</label>
+                            <select id="build-cpu">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="fg">
+                            <label>Placa de Vídeo</label>
+                            <select id="build-gpu">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="duplabar">
+                        <div class="fg">
+                            <label>Memória RAM</label>
+                            <select id="build-ram">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="fg">
+                            <label>SSD</label>
+                            <select id="build-storage">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="duplabar">
+                        <div class="fg">
+                            <label>Gabinete</label>
+                            <select id="build-case">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="fg">
+                            <label>Monitor</label>
+                            <select id="build-monitor">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p>Total estimado: <strong id="build-total">R$ 0,00</strong></p>
+                    <button id="build-add-btn" class="btn-blue" style="margin-top: 1vw; align-self: center; width: 15%;"> Adicionar ao pedido </button>
+                </div>
+
+                <div id="services">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
+                        <h2 class="section-heading" style=" margin-bottom: 0px; margin-right: 2vw;">Serviços da Loja</h2>
+                        <button id="request-quote" class="btn-blue" style="width: 15%; align-self: center;"> Solicitar Orçamento </button>
+                    </div>
+                    <div class="services-grid">
+
+                        <div class="service-card">
+                            <h3>Manutenção</h3>
+                            <p>Limpeza, troca de pasta térmica, reparos e manutenção preventiva.</p>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Montagem</h3>
+                            <p>Instalação de SSD, memória RAM, placas de vídeo e outros componentes.</p>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Formatação</h3>
+                            <p>Instalação do sistema operacional, drivers e programas essenciais.</p>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Avaliação</h3>
+                            <p>Avaliação completa para identificar falhas de hardware e software.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="maintenance-modal" class="modal-overlay">
+                <div class="service-card">
+                    <h2 style="align-self: center;">Solicitar Orçamento</h2>
+
+                    <div class="fg">
+                        <label>Nome Completo</label>
+                        <input type="text">
+                    </div>
+                    <div class="duplabar">
+                        <div class="fg">
+                            <label>Telefone</label>
+                            <input type="text">
+                        </div>
+                        <div class="fg">
+                            <label>E-mail</label>
+                            <input type="email">
+                        </div>
+                    </div>
+
+                    <div class="fg">
+                        <label>Endereço</label>
+                        <input type="text" placeholder="Rua, número e bairro">
+                    </div>
+
+                    <div class="fg">
+                        <label>Equipamento</label>
+                        <select>
+                            <option>Computador</option>
+                            <option>Notebook</option>
+                            <option>Monitor</option>
+                            <option>Impressora</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="fg">
+                        <label>Descrição do Serviço</label>
+                        <textarea style="width: 100%;" rows="6" placeholder="Descreva o serviço que estáa solicitando..."></textarea>
+                    </div>
+
+                    <button class="primary-btn"> Solicitar Orçamento </button>
                 </div>
             </div>
         </section>
@@ -210,11 +346,6 @@
                     </div>
                 </div>
             </div>
-            <footer id="sobre-footer">
-                <span>Loja Física: R. Ibituruna, 108 - Maracanã, Rio de Janeiro - RJ, 20271-110</span>
-                <span>Horário de Atendimento: 08:00 às 20:00</span>
-                <a href="#" class="footer-link">Trabalhe Conosco</a>
-            </footer>
         </section>
 
         <!-- PRODUTO -->
@@ -264,7 +395,7 @@
             </div>
 
             <div id="recomended-products">
-                <h3>Produtos Recomendados</h3>
+                <h3>Produtos Relacionados</h3>
                 <div id="recommended-grid" class="recommended-grid"></div>
             </div>
         </section>
@@ -482,11 +613,8 @@
 
         <!-- ADMIN - CRIAR PRODUTO -->
         <section id="admin-produto-create" class="page-hidden">
-
             <div class="admin-wrapper">
-
                 <h2 class="admin-title">Novo Produto</h2>
-
                 <form id="admin-produto-create-form" class="admin-form">
 
                     <div class="form-grid">
@@ -567,12 +695,15 @@
                         </div>
 
                         <div class="fg full-width">
-                            <label for="create-images-upload">Imagens do Produto</label>
-                            <input type="file" id="create-images-upload" accept="image/*" multiple>
-
-                            <small id="images-count-info"> Nenhuma imagem selecionada. </small>
+                            <label for="create-card-upload">Card do Produto</label>
+                            <input type="file" id="create-card-upload" accept="image/*">
                         </div>
 
+                        <div class="fg full-width">
+                            <label for="create-images-upload">Imagens do Produto</label>
+                            <input type="file" id="create-images-upload" multiple accept="image/*">
+                            <small id="images-count-info"> Nenhuma imagem selecionada. </small>
+                        </div>
                     </div>
 
                     <div class="admin-actions">
@@ -623,5 +754,40 @@
         </section>
 
     </main>
+    
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-col" style="text-align: center;">
+                <h3>MundoInfo</h3>
+                <p>
+                    Loja especializada em computadores, componentes, <br>
+                    periféricos e assistência técnica.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <p>+55 (21) 98823-0522</p>
+                <p>MundoInfo@gmail.com</p>
+                <p style="margin-top: 10px;">R. Ibituruna, 108 - Maracanã, <br> Rio de Janeiro - RJ, 20271-110</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Horários</h3>
+                <p>Segunda à Sexta</p>
+                <p>08:00 às 18:00</p>
+                <p>Sábado</p>
+                <p>08:00 às 13:00</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Links</h3>  
+                <a href="#homepage" style="color: wheat;">Início</a>
+                <a href="#catalogo" style="color: wheat;">Catálogo</a>
+                <a href="#pedido" style="color: wheat;">Carrinho</a>
+            </div>
+        </div>
+        <div class="footer-bottom" style="text-align: center; margin-top: 3vh;"> MundoInfo: Um projeto acadêmico desenvolvido para a disciplina de Desenvolvimento Web. </div>
+    </footer>
 </body>
 </html>

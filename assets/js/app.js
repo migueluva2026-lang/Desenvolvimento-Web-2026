@@ -2,7 +2,7 @@ import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
 import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
-import { renderAdminProdutos, renderAdminProdutoUpdate, generateImagePaths } from './admin.js';
+import { renderAdminProdutos, renderAdminProdutoUpdate, adicionarMontagemAoCarrinho, submitCriarProduto, atualizarTotalMontagem } from './admin.js';
 import { validarPedido } from "./validation.js";
 
 const pages = document.querySelectorAll("main > section");
@@ -11,15 +11,11 @@ const pages = document.querySelectorAll("main > section");
 const searchInput = document.getElementById("search-input");
 const searchDropdown = document.getElementById("search-dropdown");
 
-// Admin New product
-const createForm = document.getElementById('admin-produto-create-form');
-const categorySelect = document.getElementById('create-category');
-const newCategoryWrapper = document.getElementById('new-category-wrapper');
-const imagesUpload = document.getElementById('create-images-upload');
-const imagesInfo = document.getElementById('images-count-info');
+// Homepage
+const modal = document.getElementById("maintenance-modal");
 
-// Admin Update Product
-const form = document.getElementById("admin-produto-update-form");
+// Admin New product
+const categorySelect = document.getElementById('create-category');
 
 
 // ---- ROTEADOR ----------------------------------------------------------------
@@ -195,6 +191,46 @@ function createListeners()
         }
     });
 
+    ['build-cpu','build-gpu','build-ram','build-storage','build-case','build-monitor'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', atualizarTotalMontagem);
+    });
+
+
+    document.getElementById('build-add-btn')?.addEventListener('click', () => {
+        console.log(document.getElementById('build-add-btn'));
+        const ok = adicionarMontagemAoCarrinho();
+        if (ok) window.location.hash = '#pedido';
+    });
+
+    document.getElementById("request-quote")?.addEventListener("click", () => {
+        modal.classList.add("active");
+    });
+
+    modal?.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
+
+    // #region Catalogo
+    document.querySelectorAll(".brand-filter").forEach(checkbox =>
+        checkbox.addEventListener("change", renderCatalogo)
+    );
+
+    document.querySelectorAll(".cat-filter").forEach(checkbox =>
+        checkbox.addEventListener("change", renderCatalogo)
+    );
+
+    document.getElementById("price-range")?.addEventListener("input", e => {
+        document.getElementById("price-value").textContent = `Até ${formatPrice(e.target.value)}`;
+        renderCatalogo();
+    });
+
+    document.getElementById("sort-select")?.addEventListener("change", renderCatalogo);
+
+    //#endregion
+
+    //#region produto
     document.getElementById("add-cart-btn")?.addEventListener("click", () => {
         if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
     });
@@ -207,7 +243,9 @@ function createListeners()
     document.getElementById("ir-pedido-btn")?.addEventListener("click", () => {
         window.location.hash = "#pedido";
     });
+    //#endregion
 
+    //#region pedido
     document.getElementById("input-cep")?.addEventListener("blur", async e => {
         const data = await buscarCEP(e.target.value);
         if (!data) return;
@@ -228,10 +266,11 @@ function createListeners()
             return;
         }
         
-        state.orderData.nome     = e.target.querySelector("input[name=nome]")?.value     ?? "";
+        state.orderData.nome = e.target.querySelector("input[name=nome]")?.value     ?? "";
         state.orderData.endereco = e.target.querySelector("input[name=endereco]")?.value ?? "";
         window.location.hash = "#pagamento";
     });
+    //#endregion
 
     document.getElementById("pagamento-form")?.addEventListener("submit", e => {
         e.preventDefault();
@@ -240,6 +279,7 @@ function createListeners()
         window.location.hash = "#homepage";
     });
 
+    //#region admin
     document.getElementById("btn-novo-prod")?.addEventListener("click", () => {
         state.currentEditingProductId = null;
         window.location.hash = "#admin-produto-create";
@@ -250,62 +290,19 @@ function createListeners()
     });
 
     categorySelect?.addEventListener('change', () => { // caso category select tenha new, mostra (display block), caso não, none
-        newCategoryWrapper.style.display = categorySelect.value === '__new__' ? 'block' : 'none';
+        document.getElementById('new-category-wrapper').style.display = categorySelect.value === '__new__' ? 'block' : 'none';
     });
 
-    imagesUpload?.addEventListener('change', () => {
-        const count = imagesUpload.files.length;
-        imagesInfo.textContent = count ? `${count} imagem(ns) selecionada(s).` : 'Nenhuma imagem selecionada.';
+    document.getElementById('create-images-upload')?.addEventListener('change', e => {
+        const count = e.target.files.length;
+        document.getElementById('images-count-info').textContent =
+            count ? `${count} imagem(ns) selecionada(s).` : 'Nenhuma imagem selecionada.';
     });
 
-    document.getElementById('admin-produto-create-form')?.addEventListener('submit', async e => {
-        e.preventDefault();
 
-        const { image_card, images } = generateImagePaths();
+    document.getElementById('admin-produto-create-form')?.addEventListener('submit', submitCriarProduto);
 
-        const product = {
-            sku: document.getElementById('create-sku').value.trim(),
-            name: document.getElementById('create-name').value.trim(),
-            brand: document.getElementById('create-brand').value.trim(),
-            category: categorySelect.value === '__new__' ? document.getElementById('create-new-category').value.trim() : categorySelect.value,
-            description: document.getElementById('create-description').value.trim(),
-            price: Number(document.getElementById('create-price').value),
-            original_price: Number(document.getElementById('create-original-price').value) || null,
-            stock_quantity: Number(document.getElementById('create-stock').value),
-            featured: Number(document.getElementById('create-featured').value),
-            active: Number(document.getElementById('create-active').value),
-            image_card,
-            images
-        };
-
-        console.log(product);
-
-        try {
-            const response = await fetch("/DesenWeb2026/api/products/create.php",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(product)
-                }
-            );
-
-            const result = await response.json();
-
-            if (result.success) {
-                alert("Produto criado com sucesso!");
-                createForm.reset();
-            } else {
-                alert("Erro ao criar produto.");
-            }
-        } catch (err) {
-            console.error(err);
-            alert("Erro na comunicação com o servidor.");
-        }
-    });
-
-    form.addEventListener("submit", async e => {
+    document.getElementById("admin-produto-update-form").addEventListener("submit", async e => {
         e.preventDefault();
 
         const product = {
@@ -352,20 +349,7 @@ function createListeners()
         }
     });
 
-    document.querySelectorAll(".brand-filter").forEach(checkbox =>
-        checkbox.addEventListener("change", renderCatalogo)
-    );
-
-    document.querySelectorAll(".cat-filter").forEach(checkbox =>
-        checkbox.addEventListener("change", renderCatalogo)
-    );
-
-    document.getElementById("price-range")?.addEventListener("input", e => {
-        document.getElementById("price-value").textContent = `Até ${formatPrice(e.target.value)}`;
-        renderCatalogo();
-    });
-
-    document.getElementById("sort-select")?.addEventListener("change", renderCatalogo);
+    //#endregion
 }
 
 // ---- INIT ----------------------------------------------------------------

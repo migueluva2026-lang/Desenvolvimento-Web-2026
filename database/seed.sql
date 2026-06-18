@@ -17,7 +17,7 @@ VALUES
  1),
 
 ('Produto-002',
- 'Placa de Vídeo XFX Swift RX 9070 XT',
+ 'Placa de Video XFX Radeon RX 9070 XT Swift White Triple Fan Gaming Edition, 16GB',
  'XFX', 'Placa de Vídeo', 15,
  4599.99, 6211.65, 1,
  'assets/img/produto-002/image-card.jpg',
@@ -82,18 +82,18 @@ VALUES
 
 ('Produto-010',
  'Fonte ASUS ROG Thor 850W',
- 'ASUS', 'Periféricos', 13,
+ 'ASUS', 'Fonte', 13,
  699.99, 899.99, 0,
  'assets/img/produto-010/image-card.jpg',
  'Fonte ASUS ROG Thor 850W Platinum Modulada, Display OLED Power, Aura Sync RGB, certificação 80 Plus Platinum',
  1),
 
  ('Produto-011',
- 'Placa de Vídeo PALIT GeForce RTX 5070 8GB INFINITY 2 OC GDDR7',
- 'PALIT', 'Placa de Vídeo', 55,
- 2279.99, 2279.99, 0,
+ 'Ryzen 7 7800X3D',
+ 'RYZEN', 'Processador', 55,
+  1998.00, 4279.99, 0,
  'assets/img/produto-011/image-card.jpg',
- 'A Placa de Vídeo PALIT GeForce RTX 5070 8GB INFINITY 2 OC GDDR7, baseada na Arquitetura NVIDIA Blackwell, redefine os padrões de imersão e produtividade. Projetada para a próxima geração de jogos e aplicações criativas, esta GPU oferece Ray Tracing e IA, garantindo gráficos ultra-realistas e um desempenho sem precedentes. Com a tecnologia NVIDIA DLSS 4 e Multi Frame Generation, você obtém um aprimoramento de desempenho e gráficos impulsionado por Inteligência Artificial, enquanto a tecnologia NVIDIA Reflex proporciona um tempo de resposta revolucionário, crucial para jogos competitivos. Para criadores, as ferramentas e tecnologias NVIDIA Studio aceleram seu fluxo de trabalho, e o NVIDIA Broadcast, juntamente com o NVIDIA Encoder de 9ª Geração, eleva a qualidade de transmissões e edições de vídeo.',
+ 'Especificações Técnicas: Arquitetura "Zen 4" rodando até 5.0GHz boost, com 8 núcleos e 16 threads Compatibilidade: Suporte a PCIe 5.0 e USB 3.2 em sistemas com memórias DDR5 via tecnologia AMD EXPO Performance e Benchmarks: Cache L3 de 96MB para latência reduzida, ideal para jogos e aplicações exigentes',
  1),
 
 ('Produto-012',
@@ -153,11 +153,11 @@ VALUES
  1),
 
 ('Produto-019',
- 'Notebook Lenovo Legion 5 Intel Core i7 RTX 4070',
- 'Lenovo', 'Periféricos', 5,
+ 'Notebook Gamer Dell Alienware C7 16gb Rtx 4050 W11 - A35',
+ 'Dell', 'Notebook', 5,
  6999.99, 7999.99, 1,
  'assets/img/produto-019/image-card.jpg',
- 'Notebook Gamer Lenovo Legion 5 com Intel Core i7, GeForce RTX 4070, 16GB DDR5, SSD NVMe 1TB e tela IPS 165Hz.',
+ 'Modelo de placa gráfica dedicada: RTX 4050. Linha de placa gráfica dedicada: GeForce. Marca de placa gráfica dedicada: NVIDIA. Marca de placa gráfica integrada: Não possui. Taxa de atualização da tela: 120 Hz. Processador: Intel Core 7 240H.',
  1),
 
 ('Produto-020',

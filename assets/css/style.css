@@ -1,3 +1,4 @@
+/* #region Main */
 
 * {
     margin: 0;
@@ -12,8 +13,59 @@ html, body {
     color: #1a1a2e;
 }
 
-/* Barra de navegação */
+main {
+    padding-top: 2.6rem;
+    width: 100%;
+    min-height: 100vh;
+}
 
+.page-hidden { display: none; }
+.page-active { display: flex; }
+
+section {
+    width: 100%;
+    min-height: calc(100vh - 44px);
+}
+/* #endregion */
+
+/* #region Botões em comum entre páginas */
+
+.section-heading {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.btn-blue {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    background-color: #1d6cf0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-outline {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: #1a1a2e;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.w100 { width: 100%; }
+
+/* #endregion */
+
+/* #region Barra Superior */
 header {
     display: flex;
     align-items: center;
@@ -27,6 +79,7 @@ header {
     background-color: #131921;
     z-index: 1000;
 }
+
 
 .logo-link { text-decoration: none; }
 
@@ -175,27 +228,13 @@ header {
     display: flex;
 }
 
-main {
-    padding-top: 2.6rem;
-    width: 100%;
-    min-height: 100vh;
-}
+/* #endregion End Bar */
 
-.page-hidden { display: none; }
-.page-active { display: flex; }
-
-section {
-    width: 100%;
-    min-height: calc(100vh - 44px);
-}
-
-/* HOMEPAGE */
+/* #region HOMEPAGE */
 
 #homepage {
     flex-direction: column;
     background: #E0E0E0;
-    height: 100vh;
-    max-height: 100vh;
 }
 
 .hero-bar {
@@ -203,21 +242,56 @@ section {
     flex-direction: column;
     align-items: center;
     position: absolute;
+    top: 50px;
     left: 50%;
     transform: translate(-50%, 0%);
 
-    width: 85%;
-    background: linear-gradient(135deg, #846cdb 0%, #6d52d9 100%);
+    width: 100%;
+    min-height: 55vh;
+    max-height: 55vh;
+    background-color: black;
+    background-size: auto;
+    overflow: hidden;
+    padding: clamp(2rem, 3vw, 4rem) clamp(1rem, 5vw, 5rem);
+}
 
-    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 5vw, 5rem);
+.hero-bar img {
+    width: 85%;
+    height: 50vh;
+    object-position: top;
+}
+
+.second-bar { /* Barra secundaria */
+    padding: 9px 0;
+    background-color: #4e4e4e;
+    margin-top: 36rem;
+}
+
+.second-bar-info {
+    display: flex;
+    justify-content: center;
+    gap: 13vw;
+}
+
+.second-bar-info span {
+    color: white;
+    font-size: 16px;
+}
+
+#recommended-bar {
+    width: 70%;
+    max-height: 55vh;
+    margin-top: 5vh;
+    align-self: center;
+    background: linear-gradient(135deg, #8e7dca 0%, #7862cf 100%);
+    border-radius: 20px;
+    padding: clamp(1.25rem, 1.2vw, 4rem) clamp(1.25rem, 5vw, 5rem);
 }
 
 .promo-title {
     width: 100%;
-
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.25rem, 2vw, 2.65rem);
     color: white;
-
     margin-bottom: 2rem;
 }
 
@@ -234,6 +308,7 @@ section {
     background: white;
     gap: 1.25rem;
     min-width: 30vw;
+    max-width: 30vw;
 
     padding: 1.25rem;
     border-radius: 16px;
@@ -245,14 +320,14 @@ section {
     display: flex;
     align-self: center;
     width: 220px;
-    height: 220px;
+    height: 200px;
     object-fit: contain;
     flex-shrink: 0;
 }
 
 .feat-info h4 {
     font-size: 1rem;
-    max-width: 30vw;
+    max-width: 100%;
     line-height: 1.45;
     font-weight: 500;
     margin-bottom: 10px;
@@ -279,26 +354,97 @@ section {
     font-size: 0.75rem;
 }
 
-.second-bar { /* Barra secundaria */
-    background-color: #949494;
-    overflow: hidden;
-    padding: 9px 0;
-    white-space: nowrap;
-    margin-top: 70vh;
+.home-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px;
 }
 
-.second-bar-info {
+#pedido-build {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5%;
+    margin-top: 5vh;
+    margin-bottom: 4vh;
+}
+
+#services {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding: 20px;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.service-card h2 {
+    color: #6f42c1;
+    margin-bottom: 20px;
+}
+
+.service-card textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.primary-btn {
+    background: #6f42c1;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5px);
+
+    z-index: 9999;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+#footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #212c41;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+}
+
+.footer-content {
     display: flex;
     justify-content: center;
-    gap: 13vw;
+    flex-direction: row;
+    gap: 5vw;
 }
 
-.second-bar-info span {
-    color: white;
-    font-size: 16px;
+.footer-col {
+    margin-top: 1.5vh;
 }
 
-/* CATÁLOGO */
+/* #endregion */
+
+/* #region CATÁLOGO */
 
 #filter-sidebar {
     width: 20vw;
@@ -413,7 +559,9 @@ section {
     color: #ef4444;
 }
 
-/* CONTATOS */
+/* #endregion */
+
+/* #region CONTATOS */
 
 #contatos {
     flex-direction: row;
@@ -501,7 +649,9 @@ section {
     display: block;
 }
 
-/*  SOBRE NÓS ---------- */
+/* #endregion */
+
+/* #region SOBRE NÓS */
 
 #sobre-nos {
     flex-direction: column;
@@ -546,22 +696,9 @@ section {
     max-width: 40vw;
 }
 
-#sobre-footer {
-    background-color: #2A196B;
-    color: #ccc;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 13px 5%;
-    font-size: 0.73rem;
-}
+/* #endregion */
 
-.footer-link {
-    color: #aaa;
-    text-decoration: none;
-}
-
-/* PRODUTO */
+/* #region PRODUTO */
 
 #produto {
     flex-direction: column;
@@ -773,11 +910,13 @@ section {
 }
 
 #recomended-products {
+    align-self: center;
     margin-top: 15vh;
-    width: 100%;
+    width: 80%;
+    border-radius: 20px;
     padding: 20px;
-    background-color: #eb5f5f;
-    max-height: 40vh;
+    background-color: #bebebe;
+    max-height: 43vh;
     margin-bottom: 50vh;
 }
 
@@ -794,36 +933,9 @@ section {
     max-height: 100%;
 }
 
-/* Botões em comum entre páginas */
+/* #endregion */
 
-.btn-blue {
-    display: block;
-    width: 100%;
-    padding: 11px;
-    background-color: #1d6cf0;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-outline {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: white;
-    color: #1a1a2e;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.w100 { width: 100%; }
-
-/* Interface do pedido */
+/* #region PEDIDO */
 
 #pedido {
     flex-direction: column;
@@ -835,13 +947,6 @@ section {
 #pedido-wrapper {
     width: 100%;
     max-width: 960px;
-}
-
-.section-heading {
-    font-size: 1.6rem;
-    color: #2A196B;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
 }
 
 #pedido-layout {
@@ -928,8 +1033,6 @@ section {
     font-size: 0.9rem; 
 }
 
-/* Sumário */
-
 .resumo-pedido-item {
     display: flex;
     justify-content: space-between;
@@ -947,8 +1050,9 @@ section {
     margin-top: 4px;
     font-size: 0.9rem;
 }
+/* #endregion */
 
-/* PAGAMENTO */
+/* #region PAGAMENTO */
 
 #pagamento {
     flex-direction: column;
@@ -1052,8 +1156,9 @@ section {
 .parcela-opcao:has(input:checked) span {
     font-weight: 600;
 }
+/* #endregion */
 
-/* SIGN UP SECTION */
+/* #region SIGN UP SECTION */
 
 #sign-up {
     flex-direction: column;
@@ -1061,8 +1166,9 @@ section {
     align-items: center;
     background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
 }
+/* #endregion */
 
-/* LOGIN SECTION */
+/* #region LOGIN SECTION */
 
 #login {
     flex-direction: column;
@@ -1092,7 +1198,7 @@ section {
     font-size: 1.8rem;
     color: #2A196B;
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 15px;
     letter-spacing: 1px;
 }
 
@@ -1127,7 +1233,13 @@ section {
     border-color: #2A196B;
 }
 
+#signup-form{
+    display: flex;
+    flex-direction: column;
+}
+
 .btn-login {
+    justify-content: center;
     padding: 12px;
     background-color: #2A196B;
     color: white;
@@ -1150,8 +1262,9 @@ section {
     color: #999;
     margin-top: 16px;
 }
+/* #endregion */
 
-/* ADMIN */
+/* #region ADMIN */
 
 #admin-produtos, #admin-produto-update {
     flex-direction: column;
@@ -1336,3 +1449,4 @@ section {
 .btn-save:hover, .btn-cancel:hover {
     opacity: 0.8;
 }
+/* #endregion */

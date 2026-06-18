@@ -56,6 +56,35 @@ export function renderHomepage()
             card.addEventListener("click", goTo);
             grid.appendChild(card);
         });
+
+    renderBuildPCDropdowns();
+}
+
+function renderBuildPCDropdowns() 
+{
+    preencherDropdown("build-cpu", "Processador");
+    preencherDropdown("build-gpu", "Placa de Vídeo");
+    preencherDropdown("build-ram", "Memória Ram");
+    preencherDropdown("build-storage", "SSD");
+    preencherDropdown("build-case", "Gabinete");
+    preencherDropdown("build-monitor", "Monitor");
+}
+
+function preencherDropdown(id, categoria) 
+{
+    const select = document.getElementById(id);
+    if (!select) return;
+
+    select.innerHTML = `<option value="">Selecione</option>`;
+
+    state.productsData.filter(p => p.category === categoria && Number(p.stock_quantity) > 0).forEach(produto => {
+            select.innerHTML += `
+                <option value="${produto.id_product}">
+                    ${produto.name}
+                </option>
+            `;
+        });
+
 }
 
 export function renderCatalogo() 
@@ -237,31 +266,74 @@ export async function buscarCEP(cep)
     }
 }
 
-export function renderItensCompra() 
-{
+
+export function renderItensCompra() {
+    if (typeof syncMontagem === 'function') syncMontagem(); // garante que montagem está em sync caso venha de "comprar agora"
+ 
     const lista = document.getElementById("pedido-items-resume");
     const total = document.getElementById("pedido-total-val");
     if (!lista) return;
     lista.innerHTML = "";
-
-    if (!state.carrinho.length) {
-        lista.innerHTML = '<p style="font-size:0.8rem;color:#888;text-align:center;padding:10px 0;">Nenhum item no carrinho.</p>';
+ 
+    // ---------- Montagem ----------
+    if (state.montagem.length) {
+        lista.innerHTML += `<h4 style="margin-bottom:8px;"> Montagem Personalizada </h4>`;
+ 
+        let totalMontagem = 0;
+ 
+        state.montagem.forEach(id => {
+            const produto = state.productsData.find(p => p.id_product == id);
+            if (!produto) return;
+ 
+            totalMontagem += Number(produto.price);
+ 
+            lista.innerHTML += `
+                <div class="resumo-pedido-item">
+                    <span>${produto.category} — ${produto.name.substring(0, 30)}</span>
+                    <span>${formatPrice(produto.price)}</span>
+                </div>
+            `;
+        });
+ 
+        lista.innerHTML += `
+            <div class="resumo-pedido-item" style="font-weight:600; border-top:1px solid #ddd; margin-top:6px; padding-top:6px;">
+                <span>Subtotal montagem</span>
+                <span>${formatPrice(totalMontagem)}</span>
+            </div>
+            <hr>
+        `;
+    }
+ 
+    // ---------- Carrinho ----------
+    if (!state.carrinho.length && !state.montagem.length) {
+        lista.innerHTML += `
+            <p style="font-size:.8rem;color:#888;text-align:center;padding:10px 0;">
+                Nenhum produto no carrinho.
+            </p>
+        `;
         if (total) total.textContent = formatPrice(0);
         return;
     }
-
+ 
     state.carrinho.forEach(item => {
         const row = document.createElement("div");
         row.className = "resumo-pedido-item";
         row.innerHTML = `
             <span>${item.name.substring(0, 28)}… ×${item.quantity}</span>
-            <span>${formatPrice(Number(item.price) * item.quantity)}</span>
+            <span>${formatPrice(item.price * item.quantity)}</span>
         `;
         lista.appendChild(row);
     });
-
-    if (total) total.textContent = formatPrice(totalCarrinho());
+ 
+    // Total geral = carrinho + montagem
+    const totalMontagem = state.montagem.reduce((sum, id) => {
+        const p = state.productsData.find(x => x.id_product == id);
+        return sum + (p ? Number(p.price) : 0);
+    }, 0);
+ 
+    if (total) total.textContent = formatPrice(totalCarrinho() + totalMontagem);
 }
+
 
 export function renderPagamento() 
 {
