@@ -105,7 +105,7 @@ export function renderCatalogo()
     ].map(checkbox => checkbox.value);
 
     // Preço máximo
-    const maxPrice = Number(document.getElementById("price-range")?.value || 5000);
+    const maxPrice = Number(document.getElementById("price-range")?.value || 50000);
 
     // Aplica filtro de marcas
     if (selectedBrands.length > 0) {

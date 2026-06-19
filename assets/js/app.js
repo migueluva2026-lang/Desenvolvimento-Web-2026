@@ -2,7 +2,7 @@ import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
 import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
-import { renderAdminProdutos, renderAdminProdutoUpdate, adicionarMontagemAoCarrinho, submitCriarProduto, atualizarTotalMontagem } from './admin.js';
+import { renderAdminProdutos, renderAdminProdutoCreate, renderAdminProdutoUpdate, submitCriarProduto, submitAtualizarProduto, adicionarMontagemAoCarrinho, atualizarTotalMontagem } from './admin.js';
 import { validarPedido } from "./validation.js";
 
 const pages = document.querySelectorAll("main > section");
@@ -44,12 +44,13 @@ function changePage() {
     target.classList.add("page-active");
 
     const renders = {
-        "#homepage":             renderHomepage,
-        "#catalogo":             renderCatalogo,
-        "#produto":              renderRecommendedProducts,
-        "#pedido":               renderItensCompra,
-        "#pagamento":            renderPagamento,
-        "#admin-produtos":       renderAdminProdutos,
+        "#homepage": renderHomepage,
+        "#catalogo": async () => { await loadProducts(); renderCatalogo(); }, // para recarregar as imagens caso atualize algo
+        "#produto": renderRecommendedProducts,
+        "#pedido": renderItensCompra,
+        "#pagamento": renderPagamento,
+        "#admin-produtos": renderAdminProdutos,
+        "#admin-produto-create": renderAdminProdutoCreate,
         "#admin-produto-update": renderAdminProdutoUpdate,
     };
     renders[hash]?.();
@@ -78,7 +79,7 @@ export function restoreSession()
 export async function handleLogin( username, password) 
 {
     try {
-        const response = await fetch("/DesenWeb2026/api/auth/login.php",
+        const response = await fetch("./api/auth/login.php",
             {
                 method: "POST",
                 headers: {
@@ -132,7 +133,7 @@ function handleLogout()
 
 async function loadProducts() 
 {
-    const response = await fetch("/DesenWeb2026/api/products/list.php");
+    const response = await fetch("./api/products/list.php");
     state.productsData = await response.json();
 }
 
@@ -295,59 +296,12 @@ function createListeners()
 
     document.getElementById('create-images-upload')?.addEventListener('change', e => {
         const count = e.target.files.length;
-        document.getElementById('images-count-info').textContent =
-            count ? `${count} imagem(ns) selecionada(s).` : 'Nenhuma imagem selecionada.';
+        document.getElementById('images-count-info').textContent = count ? `${count} imagem(ns) selecionada(s).` : 'Nenhuma imagem selecionada.';
     });
-
 
     document.getElementById('admin-produto-create-form')?.addEventListener('submit', submitCriarProduto);
 
-    document.getElementById("admin-produto-update-form").addEventListener("submit", async e => {
-        e.preventDefault();
-
-        const product = {
-            id_product: state.currentEditingProductId,
-            name: document.getElementById("update-name").value,
-            brand: document.getElementById("update-brand").value,
-            category: document.getElementById("update-category").value,
-            price: Number(document.getElementById("update-price").value),
-            description: document.getElementById("update-desc").value,
-            stock_quantity: Number(document.getElementById("update-stock").value)
-        };
-
-        try {
-            const response = await fetch( "/DesenWeb2026/api/products/update.php",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(product)
-                }
-            );
-            const result = await response.json();
-
-            if (result.success) {
-                alert("Produto atualizado com sucesso!");
-
-                const produtoLocal = state.productsData.find(
-                    p => p.id_product == state.currentEditingProductId
-                );
-
-                if (produtoLocal) {
-                    Object.assign(produtoLocal, product);
-                }
-
-                window.location.hash = "#admin-produtos";
-            } else {
-                alert(result.message || "Erro ao atualizar produto.");
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert("Erro na comunicação com o servidor.");
-        }
-    });
+    document.getElementById("admin-produto-update-form")?.addEventListener("submit", submitAtualizarProduto);
 
     //#endregion
 }
@@ -377,7 +331,7 @@ window.excluirProduto = async (id) => {
     if (!confirm("Deseja realmente excluir este produto?")) return;
 
     try {
-        const response = await fetch("/DesenWeb2026/api/products/delete.php",
+        const response = await fetch("./api/products/delete.php",
             {
                 method: "POST",
                 headers: {

@@ -25,13 +25,14 @@ Futuramente, seria bom fazer um cliente padrão para realmente verificar a quest
 
 Decidi abandonar o five server e passar para o xampp tanto pro front quando pro back em prod
 isso acontece porque já estava chegando no limite do suporte de php do fiveserver, onde a validação já foi um empecilho.
-Como consequencia, como quis por uma subfolder no xamp, mudei o fetch do db para
+Como consequencia, como quis por uma subfolder no xamp, mudei o fetch do db para ter o nome da subfolder. 
+Por exemplo, no infinity free, não tem essa subfolder, logo não tem /DesenWeb2026/assets mas sim ./assets
 
 Backend
 
 É dividido nas pastas
 
-/api/      <- para os arquivos php que fazem o crud
+/api/ <- para os arquivos php que fazem o crud
 /database/ <- para o banco de dados (schema e seed)
 
 db.php faz a conexão, todos os outros php usam ele para conectar com o db

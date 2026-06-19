@@ -1270,6 +1270,10 @@ header {
 
 /* #region ADMIN */
 
+#admin-produto-create {
+    margin-top: 5vh;
+}
+
 #admin-produtos, #admin-produto-update {
     flex-direction: column;
     background-color: #f8f8f8;
@@ -1378,7 +1382,7 @@ header {
     opacity: 0.8;
 }
 
-/* FORMULÁRIO DE ATUALIZAÇÃO */
+/* ADMIN - UPDATE PRODUCT */
 
 .admin-form {
     background-color: white;
@@ -1421,6 +1425,48 @@ header {
 .admin-form .fg input:focus, .admin-form .fg textarea:focus {
     outline: none;
     border-color: #2A196B;
+}
+
+.img-preview-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+ 
+.img-preview-item {
+    position: relative;
+    display: inline-block;
+}
+ 
+.img-preview-item img {
+    display: block;
+    border-radius: 6px;
+    object-fit: cover;
+}
+ 
+.img-remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e53e3e;
+    color: #fff;
+    border: none;
+    font-size: 11px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+.img-remove-btn:hover {
+    background: #c53030;
 }
 
 .admin-actions {

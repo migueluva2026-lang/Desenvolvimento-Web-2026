@@ -177,7 +177,8 @@
                         </div>
                     </div>
 
-                    <button class="btn-blue" style="margin-top: 1vw; align-self: center; width: 15%;" onclick="window.location.hash='#pedido'"> Fazer Pedido </button>
+                    <p>Total estimado: <strong id="build-total">R$ 0,00</strong></p>
+                    <button id="build-add-btn" class="btn-blue" style="margin-top: 1vw; align-self: center; width: 15%;"> Adicionar ao pedido </button>
                 </div>
             </div>
 
@@ -262,8 +263,8 @@
             <aside id="filter-sidebar">
                 <div class="filter-group">
                     <h3>Preço</h3>
-                    <input type="range" id="price-range" min="100" max="5000" value="5000" step="100">
-                    <span id="price-value">Até R$ 5000,00</span>
+                    <input type="range" id="price-range" min="100" max="50000" value="50000" step="100">
+                    <span id="price-value">Até R$ 50000,00</span>
                 </div>
                 <div class="filter-group">
                     <h3>Marcas</h3>
@@ -696,6 +697,11 @@
                         </div>
 
                         <div class="fg full-width">
+                            <label for="create-card-upload">Card do Produto</label>
+                            <input type="file" id="create-card-upload" accept="image/*" multiple>
+                        </div>
+
+                        <div class="fg full-width">
                             <label for="create-images-upload">Imagens do Produto</label>
                             <input type="file" id="create-images-upload" accept="image/*" multiple>
 
@@ -734,15 +740,53 @@
                             <label>Preço</label>
                             <input type="number" id="update-price" step="0.01" required>
                         </div>
-                        <div class="fg full-width">
-                            <label>Descrição</label>
-                            <textarea id="update-desc" rows="4"></textarea>
+                        <div class="fg">
+                            <label>Preço Original</label>
+                            <input type="number" id="update-original-price" step="0.01">
                         </div>
                         <div class="fg">
                             <label>Quantidade em Estoque</label>
                             <input type="number" id="update-stock" required>
                         </div>
+                        <div class="fg">
+                            <label>Destaque</label>
+                            <select id="update-featured">
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
+                            </select>
+                        </div>
+                        <div class="fg">
+                            <label>Ativo</label>
+                            <select id="update-active">
+                                <option value="1">Sim</option>
+                                <option value="0">Não</option>
+                            </select>
+                        </div>
+                        <div class="fg full-width">
+                            <label>Descrição</label>
+                            <textarea id="update-desc" rows="4"></textarea>
+                        </div>
+
+
+                        <div class="fg full-width">
+                            <label>Imagem do Card</label>
+                            <img id="update-card-preview" src="" alt="Card atual" width="120" style="display:none; margin-bottom:8px; border-radius:6px;">
+                            <div>
+                                <label>Trocar imagem do card</label>
+                                <input type="file" id="update-card-upload" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="fg full-width">
+                            <label>Galeria atual</label>
+                            <div id="update-gallery-preview" class="img-preview-wrap"></div>
+                            <label style="margin-top:12px; display:block;"> Adicionar imagens à galeria </label>
+                            <input type="file" id="update-gallery-upload" accept="image/*" multiple>
+                            <small id="update-images-count-info">Nenhuma imagem selecionada.</small>
+                        </div>
+
                     </div>
+
                     <div class="admin-actions">
                         <button type="submit" class="btn-save">Salvar Alterações</button>
                         <button type="button" id="btn-voltar-admin" class="btn-cancel">Cancelar</button>
@@ -750,7 +794,6 @@
                 </form>
             </div>
         </section>
-
     </main>
     
     <footer id="footer">
