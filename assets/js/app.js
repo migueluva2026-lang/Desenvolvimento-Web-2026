@@ -12,7 +12,7 @@ const searchInput = document.getElementById("search-input");
 const searchDropdown = document.getElementById("search-dropdown");
 
 // Homepage
-const modal = document.getElementById("maintenance-modal");
+const modal = document.getElementById("service-modal");
 
 // Admin New product
 const categorySelect = document.getElementById('create-category');

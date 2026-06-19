@@ -48,11 +48,9 @@ export function renderHomepage()
                     <h4>${product.name}</h4>
                     <p class="preco-original">${formatPrice(product.original_price)}</p>
                     <p class="preco-promocao">${formatPrice(product.price)}</p>
-                    <button class="btn-ver">Ver Produto</button>
                 </div>
             `;
             const goTo = () => { window.location.hash = `#produto?id=${product.id_product}`; };
-            card.querySelector(".btn-ver").addEventListener("click", e => { e.stopPropagation(); goTo(); });
             card.addEventListener("click", goTo);
             grid.appendChild(card);
         });

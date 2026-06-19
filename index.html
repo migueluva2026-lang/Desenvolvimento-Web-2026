@@ -177,10 +177,11 @@
                         </div>
                     </div>
 
-                    <p>Total estimado: <strong id="build-total">R$ 0,00</strong></p>
-                    <button id="build-add-btn" class="btn-blue" style="margin-top: 1vw; align-self: center; width: 15%;"> Adicionar ao pedido </button>
+                    <button class="btn-blue" style="margin-top: 1vw; align-self: center; width: 15%;" onclick="window.location.hash='#pedido'"> Fazer Pedido </button>
                 </div>
+            </div>
 
+            <div id="services-wrapper">
                 <div id="services">
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <h2 class="section-heading" style=" margin-bottom: 0px; margin-right: 2vw;">Serviços da Loja</h2>
@@ -211,8 +212,8 @@
                 </div>
             </div>
 
-            <div id="maintenance-modal" class="modal-overlay">
-                <div class="service-card">
+            <div id="service-modal" class="modal-overlay">
+                <div id="service-modal-container">
                     <h2 style="align-self: center;">Solicitar Orçamento</h2>
 
                     <div class="fg">
@@ -248,7 +249,7 @@
 
                     <div class="fg">
                         <label>Descrição do Serviço</label>
-                        <textarea style="width: 100%;" rows="6" placeholder="Descreva o serviço que estáa solicitando..."></textarea>
+                        <textarea style="width: 100%;" rows="6" placeholder="Descreva o serviço que está solicitando..."></textarea>
                     </div>
 
                     <button class="primary-btn"> Solicitar Orçamento </button>
@@ -695,15 +696,12 @@
                         </div>
 
                         <div class="fg full-width">
-                            <label for="create-card-upload">Card do Produto</label>
-                            <input type="file" id="create-card-upload" accept="image/*">
-                        </div>
-
-                        <div class="fg full-width">
                             <label for="create-images-upload">Imagens do Produto</label>
-                            <input type="file" id="create-images-upload" multiple accept="image/*">
+                            <input type="file" id="create-images-upload" accept="image/*" multiple>
+
                             <small id="images-count-info"> Nenhuma imagem selecionada. </small>
                         </div>
+
                     </div>
 
                     <div class="admin-actions">
