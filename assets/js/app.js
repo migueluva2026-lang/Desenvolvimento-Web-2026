@@ -1,7 +1,7 @@
 import { state } from './state.js';
 import { removerDoCarrinho, renderCarrinho, formatPrice, totalCarrinho } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensPedido, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
+import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensPedido, renderPagamento, buscarCEP, calcularFrete, renderRecommendedProducts } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoCreate, renderAdminProdutoUpdate, submitCriarProduto, submitAtualizarProduto, adicionarMontagemAoCarrinho, atualizarTotalMontagem } from './admin.js';
 import { validarPedido } from "./validation.js";
 
@@ -364,6 +364,37 @@ function createListeners()
     //#region produto
     document.getElementById("add-cart-btn")?.addEventListener("click", () => {
         if (state.currentProduct) adicionarAoCarrinho(state.currentProduct);
+    });
+
+    document.getElementById("calc-frete-btn")?.addEventListener("click", async () => {
+        const input = document.getElementById("cep-frete");
+        const resultado = document.getElementById("frete-result");
+        const cep = input.value.replace(/\D/g, "");
+
+        if (cep.length !== 8) {
+            resultado.textContent = "CEP inválido.";
+            resultado.className = "frete-result-erro";
+            return;
+        }
+
+        resultado.textContent = "Consultando...";
+        resultado.className = "";
+
+        const data = await buscarCEP(cep);
+
+        if (!data) {
+            resultado.textContent = "CEP não encontrado.";
+            resultado.className = "frete-result-erro";
+            return;
+        }
+
+        const valor = calcularFrete(data.uf);
+
+        resultado.innerHTML = `
+            <span class="frete-local">${data.localidade} — ${data.uf}</span>
+            <span class="frete-valor">${formatPrice(valor)}</span>
+        `;
+        resultado.className = "frete-result-ok";
     });
 
     document.getElementById("comprar-agora-btn")?.addEventListener("click", () => {

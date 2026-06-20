@@ -30,9 +30,9 @@ if (!empty($_FILES['card']['tmp_name'])) {
     if (!in_array($mime, $allowed)) {
         $errors[] = 'Tipo inválido para o card';
     } else {
-        $ext      = pathinfo($_FILES['card']['name'], PATHINFO_EXTENSION) ?: 'webp';
+        $ext = pathinfo($_FILES['card']['name'], PATHINFO_EXTENSION) ?: 'webp';
         $filename = "image-card.{$ext}";
-        $dest     = $destDir . $filename;
+        $dest = $destDir . $filename;
         $cardPath = "assets/img/{$folder}/{$filename}";
 
         if (move_uploaded_file($tmp, $dest)) {

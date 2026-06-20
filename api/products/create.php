@@ -22,20 +22,20 @@ try {
     ");
 
     $stmt->execute([
-        'sku'            => $data['sku'],
-        'name'           => $data['name'],
-        'brand'          => $data['brand'],
-        'description'    => $data['description'],
-        'price'          => $data['price'],
+        'sku' => $data['sku'],
+        'name' => $data['name'],
+        'brand' => $data['brand'],
+        'description' => $data['description'],
+        'price' => $data['price'],
         'original_price' => $data['original_price'] ?: null,
-        'category'       => $data['category'],
+        'category' => $data['category'],
         'stock_quantity' => $data['stock_quantity'],
-        'featured'       => $data['featured'],
-        'active'         => $data['active'],
+        'featured' => $data['featured'],
+        'active' => $data['active'],
     ]);
 
     echo json_encode([
-        'success'    => true,
+        'success' => true,
         'id_product' => $pdo->lastInsertId(),
     ]);
 

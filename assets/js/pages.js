@@ -265,6 +265,19 @@ export async function buscarCEP(cep)
     }
 }
 
+export function calcularFrete(uf) {
+    const tabela = {
+        SP: 15,  RJ: 20,  MG: 22,  ES: 25,
+        PR: 28,  SC: 28,  RS: 30,
+        MS: 35,  MT: 38,  GO: 35,  DF: 35,
+        BA: 40,  SE: 42,  AL: 42,  PE: 42,
+        PB: 45,  RN: 45,  CE: 45,  PI: 48,  MA: 48,
+        PA: 55,  AP: 60,  AM: 60,  RO: 58,  AC: 65,  RR: 65,  TO: 50,
+    };
+
+    return tabela[uf.toUpperCase()] ?? 70; // 70 = fallback para UF desconhecida
+}
+
 export function renderItensPedido() // fica no #pedido
 {
     if (typeof syncMontagem === 'function') syncMontagem(); // garante que montagem está em sync caso venha de "comprar agora"

@@ -942,6 +942,34 @@ header {
     width: 130px;
 }
 
+#frete-result {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+    min-height: 36px;
+    font-size: 0.85rem;
+}
+
+#frete-result.frete-result-ok {
+    color: #15803d;
+}
+
+#frete-result.frete-result-erro {
+    color: #b91c1c;
+    font-size: 0.8rem;
+}
+
+.frete-local {
+    opacity: 0.7;
+    font-size: 0.78rem;
+}
+
+.frete-valor {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
 .btn-sm {
     padding: 6px 14px;
     background-color: #1d6cf0;
