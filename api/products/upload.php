@@ -3,8 +3,8 @@
 header('Content-Type: application/json');
 require_once '../db.php';
 
-$sku = trim($_POST['sku']  ?? '');
-$id  = intval($_POST['id_product'] ?? 0);
+$sku = trim($_POST['sku'] ?? '');
+$id = intval($_POST['id_product'] ?? 0);
 
 if (!$sku || !$id) {
     http_response_code(400);
@@ -12,7 +12,7 @@ if (!$sku || !$id) {
     exit;
 }
 
-$folder  = strtolower($sku);
+$folder = strtolower($sku);
 $destDir = __DIR__ . '/../../assets/img/' . $folder . '/';
 
 if (!is_dir($destDir)) {

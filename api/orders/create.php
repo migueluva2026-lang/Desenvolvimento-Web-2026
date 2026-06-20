@@ -23,11 +23,11 @@ try {
             VALUES (:name, :email, :password, :number, :address)
         ");
         $stmt->execute([
-            'name'     => $data['client']['name'],
-            'email'    => $data['client']['email'],
+            'name' => $data['client']['name'],
+            'email' => $data['client']['email'],
             'password' => password_hash(bin2hex(random_bytes(8)), PASSWORD_DEFAULT), // senha aleatória já que cliente não tem login
-            'number'   => $data['client']['number'],
-            'address'  => $data['client']['address'],
+            'number' => $data['client']['number'],
+            'address' => $data['client']['address'],
         ]);
         $id_client = $pdo->lastInsertId();
     }
@@ -38,8 +38,8 @@ try {
         VALUES (:location, :amount, 'pendente', :id_client)
     ");
     $stmt->execute([
-        'location'  => $data['client']['address'],
-        'amount'    => $data['amount'],
+        'location' => $data['client']['address'],
+        'amount' => $data['amount'],
         'id_client' => $id_client,
     ]);
     $id_order = $pdo->lastInsertId();
@@ -51,9 +51,9 @@ try {
     ");
     foreach ($data['items'] as $item) {
         $stmt->execute([
-            'id_order'   => $id_order,
+            'id_order' => $id_order,
             'id_product' => $item['id_product'],
-            'quantity'   => $item['quantity'],
+            'quantity' => $item['quantity'],
             'unit_price' => $item['unit_price'],
         ]);
     }
@@ -61,7 +61,7 @@ try {
     $pdo->commit();
 
     echo json_encode([
-        'success'  => true,
+        'success' => true,
         'id_order' => $id_order,
     ]);
 

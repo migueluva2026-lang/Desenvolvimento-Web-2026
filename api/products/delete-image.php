@@ -4,7 +4,7 @@
 header('Content-Type: application/json');
 require_once '../db.php';
 
-$data     = json_decode(file_get_contents("php://input"), true);
+$data = json_decode(file_get_contents("php://input"), true);
 $id_image = intval($data['id_image'] ?? 0);
 
 if (!$id_image) {
