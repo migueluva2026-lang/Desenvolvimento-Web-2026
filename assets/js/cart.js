@@ -43,9 +43,14 @@ export function renderCarrinho() {
             <span style="margin-left:6px;white-space:nowrap;">
                 ${formatPrice(Number(item.price) * item.quantity)}
             </span>
-            <button class="cart-item-rm"
-                    onclick="window.removerDoCarrinho(${item.id_product})">✕</button>
         `;
+
+        const btn = document.createElement("button");
+        btn.className   = "cart-item-remove";
+        btn.textContent = "X";
+        btn.addEventListener("click", () => removerDoCarrinho(item.id_product));
+        el.appendChild(btn);
+        
         lista.appendChild(el);
     });
 }

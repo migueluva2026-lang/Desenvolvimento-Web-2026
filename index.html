@@ -22,24 +22,39 @@
             <div id="search-dropdown" class="search-dropdown"></div>
         </div>
         <nav id="nav-bar">
-            <a href="#catalogo" class="menu-element">Catálogo</a>
-            <a href="#contatos" class="menu-element">Contatos</a>
-            <a href="#sobre-nos" class="menu-element">Sobre Nós</a>
-            <a href="#admin-produtos" class="menu-element admin-btn" id="admin-nav-btn" style="display:none; color:#d4a574;">ADMIN PANEL</a>
+            <div id="nav-links">
+                <a href="#catalogo" class="menu-element">Catálogo</a>
+                <a href="#contatos" class="menu-element">Contatos</a>
+                <a href="#sobre-nos" class="menu-element">Sobre Nós</a>
+                <a href="#admin-produtos" class="menu-element admin-btn" id="admin-nav-btn" style="display:none; color:#d4a574;">ADMIN PANEL</a>
+            </div>
+
             <div id="user-menu-container">
-                <button id="user-menu-btn"> 👤 </button>
-                <div id="user-dropdown" class="page-hidden">
-                    <button id="login-option">Login</button>
-                    <button id="signup-option">Criar Conta</button>
-                    <button id="logout-option" style="display:none;"> Sair </button>
+                <button id="user-menu-trigger">
+                    <span id="user-menu-label">Entrar</span>
+                </button>
+                <div id="user-dropdown">
+                    <div id="dropdown-loggedout"> <!-- deslogado -->
+                        <button id="login-cliente-option">Entrar</button>
+                        <button id="signup-option">Criar Conta</button>
+                        <button id="login-option"> Funcionário? </button>
+                    </div>
+                    <div id="dropdown-client" style="display:none;"> <!-- cliente -->
+                        <span id="cliente-nome-display" class="dropdown-greeting"></span>
+                        <button id="pedidos-option">Meus Pedidos</button>
+                        <button id="enderecos-option">Endereços</button>
+                        <button id="logout-cliente-option">Sair</button>
+                    </div>
+                    <div id="dropdown-admin" style="display:none;"> <!-- admin -->
+                        <span class="dropdown-greeting">Admin</span>
+                        <button id="logout-option">Sair</button>
+                    </div>
                 </div>
             </div>
-        </nav>
         </nav>
     </header>
 
     <main>
-
         <!-- SIGN UP -->
         <section id="sign-up" class="page-hidden">
             <div class="login-container">
@@ -48,41 +63,61 @@
                     <p class="login-subtitle" style="margin-bottom: 10px;">Preencha os dados abaixo para começar. </p>
                     <form id="signup-form">
                         <div class="fg">
-                            <label for="signup-name">Nome</label>
-                            <input type="text" id="signup-name" placeholder="Digite seu nome completo" required>
-                        </div>
-
-                        <div class="fg">
                             <label for="signup-email">Email</label>
-                            <input type="email" id="signup-email" placeholder="Digite seu email" required>
+                            <input id="signup-email" type="email" placeholder="Digite seu email" required>
                         </div>
 
                         <div class="fg">
-                            <label for="signup-phone">Telefone</label>
-                            <input type="tel" id="signup-phone" placeholder="(11) 99999-9999">
+                            <label for="signup-name">Nome</label>
+                            <input id="signup-name" type="text" placeholder="Digite seu nome completo" required>
                         </div>
 
                         <div class="fg">
-                            <label for="signup-address">Endereço</label>
-                            <input type="text" id="signup-address" placeholder="Rua, número, bairro"> 
+                            <label for="signup-number">Telefone</label>
+                            <input id="signup-number" type="number" placeholder="+55 (XX) XXXXX-XXXX" required>
                         </div>
-
                         <div class="fg">
                             <label for="signup-password">Senha</label>
-                            <input type="password" id="signup-password" placeholder="Mínimo de 6 caracteres" required>
+                            <input id="signup-password" type="password" placeholder="Mínimo de 6 caracteres" required>
                         </div>
 
-                        <button type="submit" class="btn-login"> Cadastrar </button>
+                        <div class="fg">
+                            <label for="signup-confirm">Repita sua Senha</label>
+                            <input id="signup-confirm" type="password" placeholder="Mínimo de 6 caracteres" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-signup"> Cadastrar </button>
                     </form>
 
                     <p class="login-hint"> Já possui uma conta? </p>
-
-                    <a href="#" style="display: flex; justify-content: center;"> Faça login</a>
+                    <a href="#login" style="display: flex; justify-content: center;"> Faça login</a>
                 </div>
             </div>
         </section>
 
-        <!-- LOGIN -->
+        <!-- LOGIN CLIENTE -->
+        <section id="login-cliente" class="page-hidden">
+            <div class="login-box">
+                <h2 class="section-heading" style="align-self: center;">Entrar</h2>
+                <form id="login-cliente-form" class="login-form">
+                    <div class="fg">
+                        <label>Email</label>
+                        <input id="login-cliente-email" type="email" required>
+                    </div>
+                    <div class="fg">
+                        <label>Senha</label>
+                        <input id="login-cliente-pass" type="password" required>
+                    </div>
+                    <button type="submit" class="btn-blue w100">Entrar</button>
+                </form>
+                <p style="text-align:center; margin-top:16px;">
+                    Não tem conta?
+                    <a href="#sign-up" onclick="window.location.hash='#sign-up'">Cadastre-se</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- LOGIN ADMIN -->
         <section id="login" class="page-hidden">
             <div class="login-container">
                 <div class="login-box">

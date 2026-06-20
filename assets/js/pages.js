@@ -194,9 +194,10 @@ export function renderProduct(id)
         stockInfo.style.color = produto.stock_quantity > 0 ? "#15803d"   : "#b91c1c";
     }
 
-    const thumbWrap = document.getElementById("produto-thumbs");
-    if (thumbWrap) {
-        thumbWrap.innerHTML = "";
+    const produtoThumbWrapper = document.getElementById("produto-thumbs");
+
+    if (produtoThumbWrapper) {
+        produtoThumbWrapper.innerHTML = "";
         (produto.images ?? []).forEach((imgObj, i) => {
             const img = document.createElement("img");
             img.src = imgObj.image_path;
@@ -204,10 +205,10 @@ export function renderProduct(id)
             if (i === 0) img.classList.add("active-thumb");
             img.addEventListener("click", () => {
                 if (mainImg) mainImg.src = imgObj.image_path;
-                thumbWrap.querySelectorAll("img").forEach(t => t.classList.remove("active-thumb"));
+                produtoThumbWrapper.querySelectorAll("img").forEach(t => t.classList.remove("active-thumb"));
                 img.classList.add("active-thumb");
             });
-            thumbWrap.appendChild(img);
+            produtoThumbWrapper.appendChild(img);
         });
     }
 
@@ -264,14 +265,25 @@ export async function buscarCEP(cep)
     }
 }
 
-
-export function renderItensCompra() {
+export function renderItensPedido() // fica no #pedido
+{
     if (typeof syncMontagem === 'function') syncMontagem(); // garante que montagem está em sync caso venha de "comprar agora"
  
     const lista = document.getElementById("pedido-items-resume");
     const total = document.getElementById("pedido-total-val");
     if (!lista) return;
     lista.innerHTML = "";
+
+    if (state.currentClient) {
+        const client = state.currentClient;
+        const nome  = document.getElementById("input-nome");
+        const email = document.getElementById("input-email");
+        const tel   = document.getElementById("input-tel");
+
+        if (nome  && !nome.value)  nome.value  = client.name   ?? "";
+        if (email && !email.value) email.value = client.email  ?? "";
+        if (tel   && !tel.value)   tel.value   = client.number ?? "";
+    }
  
     // ---------- Montagem ----------
     if (state.montagem.length) {
@@ -332,12 +344,11 @@ export function renderItensCompra() {
     if (total) total.textContent = formatPrice(totalCarrinho() + totalMontagem);
 }
 
-
-export function renderPagamento() 
+export function renderPagamento()
 {
-    document.getElementById("pag-valor").textContent  = formatPrice(totalCarrinho());
-    document.getElementById("pag-codigo").textContent = "#" + Math.random().toString(36).substring(2, 10).toUpperCase();
-    document.getElementById("pag-data").textContent   = new Date().toLocaleDateString("pt-BR");
-    document.getElementById("pag-dest").textContent   = state.orderData.nome     || "--";
-    document.getElementById("pag-local").textContent  = state.orderData.endereco || "--";
+    document.getElementById("pag-valor").textContent = formatPrice(totalCarrinho());
+    document.getElementById("pag-codigo").textContent = state.orderData.id_order? "#" + String(state.orderData.id_order).padStart(6, "0") : "--";
+    document.getElementById("pag-data").textContent = new Date().toLocaleDateString("pt-BR");
+    document.getElementById("pag-dest").textContent = state.orderData.nome || "--";
+    document.getElementById("pag-local").textContent = state.orderData.endereco || "--";
 }

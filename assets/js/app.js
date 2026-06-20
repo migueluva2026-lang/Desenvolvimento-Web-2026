@@ -1,7 +1,7 @@
 import { state } from './state.js';
-import { removerDoCarrinho, renderCarrinho, formatPrice } from './cart.js';
+import { removerDoCarrinho, renderCarrinho, formatPrice, totalCarrinho } from './cart.js';
 import { adicionarAoCarrinho } from './cart.js';
-import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensCompra, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
+import { renderSearchDropdown, renderHomepage, renderCatalogo, renderProduct, renderItensPedido, renderPagamento, buscarCEP, renderRecommendedProducts } from './pages.js';
 import { renderAdminProdutos, renderAdminProdutoCreate, renderAdminProdutoUpdate, submitCriarProduto, submitAtualizarProduto, adicionarMontagemAoCarrinho, atualizarTotalMontagem } from './admin.js';
 import { validarPedido } from "./validation.js";
 
@@ -17,10 +17,10 @@ const modal = document.getElementById("service-modal");
 // Admin New product
 const categorySelect = document.getElementById('create-category');
 
-
 // ---- ROTEADOR ----------------------------------------------------------------
 
 function changePage() {
+    window.scrollTo(0, 0); // ao trocar de página, se certificade estar no topo dela
     let hash = window.location.hash || "#homepage";
 
     if (hash === "#admin-produto-update" && !state.currentEditingProductId) hash = "#admin-produtos";
@@ -31,6 +31,11 @@ function changePage() {
         const id = params.get("id");
         if (id) renderProduct(id);
         hash = "#produto";
+    }
+
+    if (hash === "#pedido" && !state.currentClient && !state.isAdmin) {
+        state._redirectAfterLogin = "#pedido";
+        hash = "#login-cliente";
     }
 
     const target = document.querySelector(hash);
@@ -47,7 +52,7 @@ function changePage() {
         "#homepage": renderHomepage,
         "#catalogo": async () => { await loadProducts(); renderCatalogo(); }, // para recarregar as imagens caso atualize algo
         "#produto": renderRecommendedProducts,
-        "#pedido": renderItensCompra,
+        "#pedido": renderItensPedido,
         "#pagamento": renderPagamento,
         "#admin-produtos": renderAdminProdutos,
         "#admin-produto-create": renderAdminProdutoCreate,
@@ -56,78 +61,95 @@ function changePage() {
     renders[hash]?.();
 }
 
-// ---- AUTH ------------------------------------------------------------------
-export function restoreSession() 
-{
-    const admin = localStorage.getItem("admin");
+// ---- ENTERING ------------------------------------------------------------------
 
-    if (!admin)
-        return false;
-
-    const data = JSON.parse(admin);
-
-    state.isAdmin = true;
-
-    document.getElementById("signup-option").style.display = "none";
-    document.getElementById("login-option").style.display = "none";
-    document.getElementById("admin-nav-btn").style.display = "inline-block";
-    document.getElementById("logout-option").style.display = "inline-block";
-
-    return true;
+export function restoreSession() {
+    const adminData  = localStorage.getItem("admin");
+    const clientData = localStorage.getItem("client");
+ 
+    if (adminData) {
+        state.isAdmin = true;
+    } else if (clientData) {
+        state.currentClient = JSON.parse(clientData);
+    }
+ 
+    updateClientUI();
 }
 
-export async function handleLogin( username, password) 
-{
+function updateClientUI() {
+    const isClient = !!state.currentClient;
+    const isAdmin  = !!state.isAdmin;
+ 
+    const label = document.getElementById("user-menu-label");
+    const loggedout = document.getElementById("dropdown-loggedout");
+    const clientPanel = document.getElementById("dropdown-client");
+    const adminPanel = document.getElementById("dropdown-admin");
+    const adminNavBtn = document.getElementById("admin-nav-btn");
+ 
+    if (isAdmin) {
+        if (label) label.textContent = "Admin";
+        if (loggedout) loggedout.style.display = "none";
+        if (clientPanel) clientPanel.style.display = "none";
+        if (adminPanel) adminPanel.style.display = "block";
+        if (adminNavBtn) adminNavBtn.style.display = "inline-block";
+    } else if (isClient) {
+        if (label) label.textContent = state.currentClient.name.split(" ")[0];
+        if (loggedout) loggedout.style.display = "none";
+        if (clientPanel) clientPanel.style.display = "block";
+        if (adminPanel) adminPanel.style.display = "none";
+        if (adminNavBtn) adminNavBtn.style.display = "none";
+    } else {
+        if (label) label.textContent = "Entrar";
+        if (loggedout) loggedout.style.display = "block";
+        if (clientPanel) clientPanel.style.display = "none";
+        if (adminPanel) adminPanel.style.display = "none";
+        if (adminNavBtn) adminNavBtn.style.display = "none";
+    }
+}
+
+export async function handleLogin(credentials) {
     try {
-        const response = await fetch("./api/auth/login.php",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
-            }
-        );
-        const result = await response.json();
-        if (!result.success)
-        {
-            alert("Usuário ou senha inválidos!");
+        const res = await fetch("./api/auth/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(credentials),
+        });
+        const result = await res.json();
+        if (!result.success) {
+            alert(result.message ?? "Credenciais inválidas.");
             return;
         }
-
-        localStorage.setItem("admin", JSON.stringify({
-            id_admin: result.id_admin,
-            username: result.username
-            })
-        );
-
-        state.isAdmin = true;
-
-        document.getElementById("signup-option").style.display = "none";
-        document.getElementById("login-option").style.display = "none";
-        document.getElementById("admin-nav-btn").style.display = "inline-block";
-        document.getElementById("logout-option").style.display = "inline-block";
-        window.location.hash = "#admin-produtos";
-    } catch (error) {
-        console.error(error);
+ 
+        if (result.role === "admin") {
+            localStorage.setItem("admin", JSON.stringify({ id_admin: result.id_admin, username: result.username,}));
+            state.isAdmin = true;
+            updateClientUI();
+            closeDropdown();
+            window.location.hash = "#admin-produtos";
+ 
+        } else if (result.role === "client") {
+            localStorage.setItem("client", JSON.stringify(result));
+            state.currentClient = result;
+            updateClientUI();
+            closeDropdown();
+            window.location.hash = state._redirectAfterLogin ?? "#homepage";
+            delete state._redirectAfterLogin;
+        }
+    } catch (err) {
+        console.error(err);
         alert("Erro ao efetuar login.");
     }
 }
 
-function handleLogout() 
-{
+function handleLogout() {
     localStorage.removeItem("admin");
+    localStorage.removeItem("client");
     state.isAdmin = false;
-
-    document.getElementById("signup-option").style.display = "inline-block";
-    document.getElementById("login-option").style.display = "inline-block";
-    document.getElementById("admin-nav-btn").style.display = "none";
-    document.getElementById("logout-option").style.display = "none";
+    state.currentClient = null;
+    updateClientUI();
     window.location.hash = "#homepage";
 }
+
 
 // ---- API --------------------------------------------------------------------
 
@@ -137,25 +159,132 @@ async function loadProducts()
     state.productsData = await response.json();
 }
 
+// ---- Coisas repetitivas ------------------------------------------------------
+
+function openDropdown() 
+{ 
+    document.getElementById("user-dropdown")?.classList.add("open"); 
+}
+function closeDropdown() 
+{ 
+    document.getElementById("user-dropdown")?.classList.remove("open"); 
+}
+
 // ---- LISTENERS ---------------------------------------------------------------
+
+function initDropdownListeners() {
+    const container = document.getElementById("user-menu-container");
+    const trigger = document.getElementById("user-menu-trigger");
+    const dropdown  = document.getElementById("user-dropdown");
+ 
+    if (!container || !trigger || !dropdown) return;
+ 
+    trigger.addEventListener("click", e => { // toggle do trigger 
+        e.stopPropagation();
+        dropdown.classList.toggle("open");
+    });
+ 
+    container.addEventListener("mouseenter", openDropdown);
+    container.addEventListener("mouseleave", closeDropdown);
+ 
+    document.addEventListener("click", e => { // caso clique fora
+        if (!container.contains(e.target)) closeDropdown();
+    });
+    
+ 
+    // Botões do dropdown 
+    document.getElementById("login-cliente-option")?.addEventListener("click", () => { 
+        closeDropdown();
+        window.location.hash = "#login-cliente";
+    });
+    document.getElementById("signup-option")?.addEventListener("click", () => {
+        closeDropdown();
+        window.location.hash = "#sign-up";
+    });
+
+    // login admin
+    document.getElementById("login-option")?.addEventListener("click", () => {
+        closeDropdown();
+        window.location.hash = "#login";
+    });
+ 
+    // Cliente logado
+    document.getElementById("pedidos-option")?.addEventListener("click", () => {
+        closeDropdown();
+        window.location.hash = "#meus-pedidos"; // página futura
+    });
+    document.getElementById("enderecos-option")?.addEventListener("click", () => {
+        closeDropdown();
+        window.location.hash = "#meus-enderecos"; // página futura
+    });
+    document.getElementById("logout-cliente-option")?.addEventListener("click", () => {
+        closeDropdown();
+        handleLogout();
+    });
+ 
+    // Admin logado
+    document.getElementById("logout-option")?.addEventListener("click", () => {
+        closeDropdown();
+        handleLogout();
+    });
+}
 
 function createListeners() 
 {
-    document.getElementById("login-option")?.addEventListener("click",  () => { window.location.hash = "#login"; });
-    document.getElementById("signup-option")?.addEventListener("click", () => { window.location.hash = "#sign-up"; });
+    initDropdownListeners();
 
+    // #region Entrar / SignUp
+    document.getElementById("signup-form")?.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const name = document.getElementById("signup-name").value.trim();
+        const email = document.getElementById("signup-email").value.trim();
+        const number = document.getElementById("signup-number").value.trim();
+        const password = document.getElementById("signup-password").value;
+        const confirm  = document.getElementById("signup-confirm").value;
+
+        if (password !== confirm) {
+            alert("As senhas não coincidem.");
+            return;
+        }
+
+        try {
+            const res = await fetch(`./api/client/create.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, number, password }),
+            });
+            const result = await res.json();
+
+            if (!result.success) {
+                const msg = result.errors?.join("\n") ?? result.message ?? "Erro ao cadastrar.";
+                alert(msg);
+                return;
+            }
+
+            alert("Cadastro realizado com sucesso! Faça login para continuar.");
+            window.location.hash = "#login";
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro na comunicação com o servidor.");
+        }
+    });
+
+    // Login Cliente
+    document.getElementById("login-cliente-form")?.addEventListener("submit", e => {
+        e.preventDefault();
+
+        handleLogin({email: document.getElementById("login-cliente-email").value.trim(), password: document.getElementById("login-cliente-pass").value,});
+    });
+ 
+    // Login admin
     document.getElementById("login-form")?.addEventListener("submit", e => {
         e.preventDefault();
-        handleLogin(
-            document.getElementById("login-user").value,
-            document.getElementById("login-pass").value
-        );
+        handleLogin({ username: document.getElementById("login-user").value.trim(), password: document.getElementById("login-pass").value,
+        });
     });
-
-    document.getElementById("logout-option")?.addEventListener("click", e => {
-        e.preventDefault();
-        handleLogout();
-    });
+    //#endregion
 
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.trim().toLowerCase();
@@ -192,10 +321,10 @@ function createListeners()
         }
     });
 
+
     ['build-cpu','build-gpu','build-ram','build-storage','build-case','build-monitor'].forEach(id => {
         document.getElementById(id)?.addEventListener('change', atualizarTotalMontagem);
     });
-
 
     document.getElementById('build-add-btn')?.addEventListener('click', () => {
         console.log(document.getElementById('build-add-btn'));
@@ -212,6 +341,7 @@ function createListeners()
             modal.classList.remove("active");
         }
     });
+
 
     // #region Catalogo
     document.querySelectorAll(".brand-filter").forEach(checkbox =>
@@ -258,17 +388,59 @@ function createListeners()
         document.getElementById("input-complemento").value = data.complemento || "";
     });
 
-    document.getElementById("pedido-form")?.addEventListener("submit", e => {
+    document.getElementById("pedido-form")?.addEventListener("submit", async e => {
         e.preventDefault();
-        const erros = validarPedido(e.target);
 
-        if (erros.length) {
-            alert(erros.join("\n"));
+        const erros = validarPedido(e.target);
+        if (erros.length) { alert(erros.join("\n")); return; }
+
+        const nome = document.getElementById("input-nome").value;
+        const email = document.getElementById("input-email").value;
+        const telefone = document.getElementById("input-tel").value;
+        const rua = document.getElementById("input-rua").value;
+        const numero = document.getElementById("input-numero").value;
+        const bairro = document.getElementById("input-bairro").value;
+        const cidade = document.getElementById("input-cidade").value;
+        const uf = document.getElementById("input-uf").value;
+        const complemento = document.getElementById("input-complemento").value;
+        const endereco = `${rua}, ${numero}${complemento ? ` (${complemento})` : ""} - ${bairro}, ${cidade}/${uf}`;
+
+        state.orderData.nome = nome;
+        state.orderData.email = email;
+        state.orderData.telefone = telefone;
+        state.orderData.endereco = endereco;
+
+        const payload = {
+            client: { name: nome, email, number: telefone, address: endereco },
+            amount: totalCarrinho(),
+            items: state.carrinho.map(item => ({
+                id_product: item.id_product,
+                quantity:   item.quantity,
+                unit_price: Number(item.price), // garante número, não string
+            })),
+        };
+
+        try {
+            const res = await fetch(`./api/orders/create.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            const result = await res.json();
+
+            if (!result.success) {
+                alert("Erro ao registrar pedido: " + (result.message ?? ""));
+                return;
+            }
+
+            state.orderData.id_order = result.id_order;
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao comunicar com o servidor.");
             return;
         }
-        
-        state.orderData.nome = e.target.querySelector("input[name=nome]")?.value     ?? "";
-        state.orderData.endereco = e.target.querySelector("input[name=endereco]")?.value ?? "";
+
         window.location.hash = "#pagamento";
     });
     //#endregion
